@@ -7,6 +7,13 @@ module Bri
 
     if results.size == 0
       "No matching results found"
+    elsif results.size == 1
+    else
+      output = []
+      output << '------------------------------------------------------ Multiple choices:'
+      output << ''
+      output << results.join( ', ' )
+      output.join( "\n" )
     end
   end
 end
