@@ -4,22 +4,24 @@ require 'bri/match'
 require 'bri/matcher'
 
 module Bri
-  def self.format_elements( array )
-    width = 72
+  WIDTH = 72
 
+  def self.format_elements( array )
     rows = []
     row = []
     row_length = 0
 
     array.each do |element|
-      if row_length + element.length + 2 < width
-        row << element
-        row_length += element.length + 2
-      else
+      element_length_with_separator = element.length + 2
+
+      if row_length + element_length_with_separator >= WIDTH
         rows << row
-        row = [ element ]
-        row_length = element.length + 2
+        row = []
+        row_length = 0
       end
+
+      row << element
+      row_length += element_length_with_separator
     end
 
     rows << row
