@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require 'bri'
+
+result = Bri.ri( ARGV[0] )
+puts result
