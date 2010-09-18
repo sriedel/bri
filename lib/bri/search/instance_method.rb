@@ -20,8 +20,8 @@ module Bri
                   store.instance_methods.has_key?( @class_term ) &&
                   store.instance_methods[@class_term].include?( @method_term )
                 end
-        @matches << Bri::Match::InstanceMethod.new( store.load_method( @class_term, 
-                                                                    "#" + @method_term ) )
+        @matches << Bri::Match::Method.new( store.load_method( @class_term, 
+                                                              "#" + @method_term ) )
       end
     end
   end

@@ -1,6 +1,6 @@
 module Bri
   module Match
-    class InstanceMethod < Base
+    class Method < Base
       include Bri::Templates::Helpers
       TEMPLATE = Bri::Templates::METHOD_DESCRIPTION
 
