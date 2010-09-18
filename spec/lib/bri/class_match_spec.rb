@@ -1,4 +1,46 @@
 require 'spec_helper'
 
 describe Bri::ClassMatch do
+  let( :fake_paragraph ) do
+    mock( RDoc::Markup::Paragraph, :parts => [ "This is row one", 
+                                               "And this is row 2" ] )
+  end
+
+  let( :fake_description ) do 
+    mock( RDoc::Markup::Document, :parts => [ fake_paragraph ] ) 
+  end
+
+  let( :fake_include ) do
+    mock( RDoc::Include, :full_name => "Included::Module" )
+  end
+
+  let( :fake_constant ) do
+    mock( RDoc::Constant, :name => "MockConstant", :value => "This is my value" )
+  end
+
+  let( :fake_attribute ) do
+    mock( RDoc::Constant, :name => "attribute", :rw => 'R' )
+  end
+
+  let( :rdoc_class ) { mock( RDoc::NormalClass, :type => "module",
+                                                :name => "MyModule",
+                                                :comment => fake_description,
+                                                :includes => [ fake_include ],
+                                                :constants => [ fake_constant ],
+                                                :attributes => [ fake_attribute ]
+                                                )
+                                                }
+
+  describe "#initialize" do
+    context "a class with everything" do
+      subject { Bri::ClassMatch.new( rdoc_class ) }
+
+      its( :type ) { should == rdoc_class.type }
+      its( :name ) { should == rdoc_class.name }
+      its( :description_paragraphs ) { should == fake_description.parts.collect { |p| p.parts.join } }
+      its( :includes ) { should == rdoc_class.includes.collect{ |i| i.full_name } }
+      its( :constants ) { should == rdoc_class.constants.collect { |c| { :name => c.name, :value => c.value } } }
+      its( :attributes ) { should == rdoc_class.attributes.collect { |a| "#{a.name} (#{a.rw})" } }
+    end
+  end
 end
