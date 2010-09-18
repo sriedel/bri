@@ -12,13 +12,25 @@ module Bri
         source.each do |element|
           case element
             when RDoc::Markup::Paragraph 
-              result << reflow( element.parts.join( " " ) )
+              result << reflow( element.text )
             when RDoc::Markup::BlankLine
               result << ""
             when RDoc::Markup::Verbatim
-              result << element.parts.join
+              result << element.text
             when RDoc::Markup::Heading
               result << '  ' * element.level + element.text
+            when RDoc::Markup::ListItem
+              result << "#{element.label} #{build_description( element.parts ).join}"
+            when RDoc::Markup::List
+              case element.type
+                when :NOTE, :LABEL
+                  result << "Note:"
+                  result << build_description( element.items ).join( "\n" )
+                when :BULLET
+                  result << build_description( element.items ).join( "\n" )
+                else 
+                  raise "Don't know how to handle list type #{element.type}: #{element.inspect}"
+              end
             else  
               raise "Don't know how to handle type #{element.class}: #{element.inspect}"
           end
