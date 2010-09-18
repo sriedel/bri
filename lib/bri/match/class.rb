@@ -5,6 +5,7 @@ module Bri
   module Match
     class Class < Base
       include Bri::Templates::Helpers
+      TEMPLATE = Bri::Templates::CLASS_DESCRIPTION
 
       attr_reader :type, :name, :description_paragraphs
       attr_reader :includes, :constants, :class_methods, :instance_methods
@@ -26,9 +27,6 @@ module Bri
         @instance_methods = instance_methods.collect { |m| m.name }
       end
 
-      def to_s
-        ERB.new( Bri::Templates::CLASS_DESCRIPTION, nil, '<>' ).result( binding )
-      end
     end
   end
 end
