@@ -5,6 +5,7 @@ require 'bri/mall'
 require 'bri/match'
 require 'bri/matcher'
 require 'bri/templates'
+require 'bri/class_search'
 
 module Bri
   WIDTH = 72
