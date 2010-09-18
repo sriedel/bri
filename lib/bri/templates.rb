@@ -18,7 +18,6 @@ module Bri
 <% end %>
 <% end %>
 
-
 <%= hrule %>
 
 <% if !includes.empty? %>
@@ -54,10 +53,14 @@ module Bri
     EOT
 
     METHOD_DESCRIPTION =<<-EOT
-  ------------------------------------------------- <%= method.module %><%= method.separator %><%= method.name %>
-       <%= method.name %>(<%= method.arglist %>)
-  ------------------------------------------------------------------------
-       <%= method.comment %>
+<%= hrule( full_name ) %>
+<%= call_syntaxes %>
+<%= hrule %>
+<% if description_paragraphs.empty? %>
+  (no description...)
+<% else %>
+<%= description_paragraphs.join( "\n" ) %>
+<% end %>
 
     EOT
 
@@ -72,9 +75,9 @@ module Bri
         Term::ANSIColor::green + Term::ANSIColor::underline + text + Term::ANSIColor::reset + "\n"
       end
 
-      def array_to_width( array, width = Bri::WIDTH, separator = ", " )
+      def array_to_width( array, width = Bri::WIDTH, separator = ", ", indent_steps = 1 )
         indentation = '  '
-        rows = '' + indentation
+        rows = '' + indentation * indent_steps
         row = ''
         row_length = 0
 
@@ -82,7 +85,7 @@ module Bri
 
         array.each do |element|
           if row.length + element.length >= width
-            rows << row + "\n" + indentation
+            rows << row + "\n" + indentation * indent_steps
             row = ''
           end
 

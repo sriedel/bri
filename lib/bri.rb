@@ -8,6 +8,8 @@ require 'bri/matcher'
 require 'bri/templates'
 require 'bri/class_search'
 require 'bri/class_match'
+require 'bri/class_method_search'
+require 'bri/class_method_match'
 
 module Bri
   WIDTH = 72
