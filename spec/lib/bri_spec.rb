@@ -14,11 +14,13 @@ describe Bri do
     end
 
     it "should print a heading row" do
+      pending
       header, *rest = subject.split("\n")
       header.should == '------------------------------------------------------ Multiple choices:'
     end
 
     it "should then list fully qualified matching method names" do
+      pending
       header, dummy, *list = subject.split("\n")
       list.one? { |row| row =~ /A#method/ }.should be_true
       list.one? { |row| row =~ /B#method/ }.should be_true
@@ -32,6 +34,7 @@ describe Bri do
     end
 
     it "should say nothing matched" do
+      pending
       subject.should == "No matching results found"
     end
   end
