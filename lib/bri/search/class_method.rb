@@ -1,12 +1,11 @@
 module Bri
   module Search
     class ClassMethod < Base
-      attr_reader :term, :class_term, :method_term, :matches
+      attr_reader :class_term, :method_term
 
       def initialize( term )
-        @term = term
+        super
         @class_term, @method_term = term.split( /[\.#]/, 2 )
-        @matches = []
       end
 
       def search( type = :fully_qualified )

@@ -1,12 +1,6 @@
 module Bri
   module Search
     class Class < Base
-      attr_reader :term, :matches
-
-      def initialize( term )
-        @term = term
-        @matches = []
-      end
 
       def search( type = :fully_qualified )
         # NOTE: classes are only searched as fully qualified for the time being
