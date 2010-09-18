@@ -6,10 +6,8 @@ require 'term/ansicolor'
 require 'bri/mall'
 require 'bri/matcher'
 require 'bri/templates'
-require 'bri/class_search'
-require 'bri/class_match'
-require 'bri/class_method_search'
-require 'bri/class_method_match'
+require 'bri/search'
+require 'bri/match'
 
 module Bri
   WIDTH = 72
