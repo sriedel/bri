@@ -22,12 +22,54 @@ describe Bri::ClassMatch do
     mock( RDoc::Constant, :name => "attribute", :rw => 'R' )
   end
 
+  let( :fake_public_instance_method ) do
+    mock( RDoc::AnyMethod, :name => "public_instance",  
+                           :singleton => false,
+                           :visibility => :public )
+  end
+
+  let( :fake_protected_instance_method ) do
+    mock( RDoc::AnyMethod, :name => "protected_instance",  
+                           :singleton => false,
+                           :visibility => :protected )
+  end
+
+  let( :fake_private_instance_method ) do
+    mock( RDoc::AnyMethod, :name => "private_instance",  
+                           :singleton => false,
+                           :visibility => :private )
+  end
+
+  let( :fake_public_class_method ) do
+    mock( RDoc::AnyMethod, :name => "public_class",  
+                           :singleton => true,
+                           :visibility => :public )
+  end
+
+  let( :fake_protected_class_method ) do
+    mock( RDoc::AnyMethod, :name => "protected_class",  
+                           :singleton => true,
+                           :visibility => :protected )
+  end
+
+  let( :fake_private_class_method ) do
+    mock( RDoc::AnyMethod, :name => "private_class",  
+                           :singleton => true,
+                           :visibility => :private )
+  end
+
   let( :rdoc_class ) { mock( RDoc::NormalClass, :type => "module",
                                                 :name => "MyModule",
                                                 :comment => fake_description,
                                                 :includes => [ fake_include ],
                                                 :constants => [ fake_constant ],
-                                                :attributes => [ fake_attribute ]
+                                                :attributes => [ fake_attribute ],
+                                                :method_list => [ fake_public_instance_method,
+                                                                  fake_protected_instance_method,
+                                                                  fake_private_instance_method,
+                                                                  fake_public_class_method,
+                                                                  fake_protected_class_method,
+                                                                  fake_private_class_method ]
                                                 )
                                                 }
 
@@ -41,6 +83,8 @@ describe Bri::ClassMatch do
       its( :includes ) { should == rdoc_class.includes.collect{ |i| i.full_name } }
       its( :constants ) { should == rdoc_class.constants.collect { |c| { :name => c.name, :value => c.value } } }
       its( :attributes ) { should == rdoc_class.attributes.collect { |a| "#{a.name} (#{a.rw})" } }
+      its( :instance_methods ) { should == rdoc_class.method_list.select { |m| m.visibility == :public && m.singleton == false } }
+      its( :class_methods ) { should == rdoc_class.method_list.select { |m| m.visibility == :public && m.singleton == true } }
     end
   end
 end

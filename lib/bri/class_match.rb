@@ -15,8 +15,10 @@ module Bri
       @constants = rdoc_result.constants.collect { |c| { :name => c.name,
                                                          :value => c.value } }
       @attributes = rdoc_result.attributes.collect { |a| "#{a.name} (#{a.rw})" }
-      @class_methods = "IMPLEMENT ME"
-      @instance_methods = "IMPLEMENT ME"
+
+      @class_methods, @instance_methods = rdoc_result.method_list.
+                                                      select {|m| m.visibility == :public }.
+                                                      partition { |m| m.singleton }
     end
   end
 end
