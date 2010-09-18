@@ -2,10 +2,10 @@ $: << File.dirname( __FILE__ )
 require 'erb'
 
 require 'bri/mall'
-require 'bri/match'
 require 'bri/matcher'
 require 'bri/templates'
 require 'bri/class_search'
+require 'bri/class_match'
 
 module Bri
   WIDTH = 72
