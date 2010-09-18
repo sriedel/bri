@@ -1,17 +1,41 @@
 module Bri
   class Matcher
+    SEPARATOR_RE = %r{[#.]}
+
     def initialize
       @mall = Bri::Mall.new
     end
 
-    def find( query )
-      #TODO: add classes to the query
-      #TODO: add increasingly lenient match methods like qri/fastri
+    def find( term )
+      case match_type( term )
+        when :class
+          
+        when :qualified_method
+        when :unqualified_method
+          class_methods = match_methods( query, @mall.class_methods_by_class, :class_method )
+          instance_methods = match_methods( query, @mall.instance_methods_by_class, :instance_method )
+          class_methods + instance_methods
+        else
+          raise "Unknown match type"
+      end
+    end
 
-      class_methods = match_methods( query, @mall.class_methods_by_class, :class_method )
-      instance_methods = match_methods( query, @mall.instance_methods_by_class, :instance_method )
+    def match_type( term )
+      case term
+        when /^[A-Z]/  then :fully_qualified
+        when /^[_a-z]/ then :unqualified
+        when /^[.#]/   then :partially_qualified
+        else :error
+      end
+    end
 
-      class_methods + instance_methods
+    def match_subject( term )
+      case term
+        when /^[A-Z].*\./, /^\./   then :class_method
+        when /^[A-Z].*#/,  /^#/    then :instance_method
+        when /^[A-Z][^.#]*/        then :module
+        else :method
+      end
     end
 
     private
@@ -24,5 +48,10 @@ module Bri
         end
       end.flatten
     end
+
+    def match_partitions( term )
+      class_name, method_name = term.split( SEPARATOR_RE, 2 )
+    end
+
   end
 end
