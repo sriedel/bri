@@ -1,5 +1,7 @@
 $: << File.dirname( __FILE__ )
 require 'erb'
+require 'term/ansicolor'
+
 
 require 'bri/mall'
 require 'bri/matcher'

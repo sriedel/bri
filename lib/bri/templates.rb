@@ -9,7 +9,7 @@ module Bri
     EOT
 
     CLASS_DESCRIPTION =<<-EOT
------------------------------------------------ <%= type %>: <%= name %>
+<%= hrule( type + ": " + name ) %>
 <% if description_paragraphs.empty? %>
   (no description...)
 <% else %>
@@ -18,34 +18,35 @@ module Bri
 <% end %>
 <% end %>
 
-------------------------------------------------------------------------
+
+<%= hrule %>
 
 <% if !includes.empty? %>
-Includes:
+<%= section_header( "Includes:" ) %>
 <%= array_to_width( includes.sort ) %>
 
 
 <% end %>
 <% if !constants.empty? %>
-Constants:
+<%= section_header( "Constants:" ) %>
 <%= array_to_width( constants.sort ) %>
 
 
 <% end %>
 <% if !class_methods.empty? %>
-Class methods:
+<%= section_header( "Class methods:" ) %>
 <%= array_to_width( class_methods.sort ) %>
 
 
 <% end %>
 <% if !instance_methods.empty? %>
-Instance methods:
+<%= section_header( "Instance methods:" ) %>
 <%= array_to_width( instance_methods.sort ) %>
 
 
 <% end %>
 <% if !attributes.empty? %>
-Attributes:
+<%= section_header( "Attributes:" ) %>
 <%= array_to_width( attributes.sort ) %>
 
 
@@ -61,6 +62,16 @@ Attributes:
     EOT
 
     module Helpers
+      def hrule( text = '', width = Bri::WIDTH )
+        '-' * ( width - text.length - 1 ) + " " + 
+          Term::ANSIColor::bold + text + Term::ANSIColor::reset + 
+          "\n"
+      end
+
+      def section_header( text )
+        Term::ANSIColor::green + Term::ANSIColor::underline + text + Term::ANSIColor::reset + "\n"
+      end
+
       def array_to_width( array, width = Bri::WIDTH, separator = ", " )
         indentation = '  '
         rows = '' + indentation
