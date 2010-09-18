@@ -6,6 +6,10 @@ module Bri
       def initialize( term )
         super
         @class_term, @method_term = term.split( /[\.#]/, 2 )
+
+        if @class_term !~ /^[A-Z]/ && @method_term.nil?
+          @method_term, @class_term = @class_term, @method_term
+        end
       end
 
       def search( type = :fully_qualified )
@@ -31,8 +35,24 @@ module Bri
       end
 
       def unqualified_search
-        raise "Implement me!"
+        [ /^#{Regexp.escape @method_term}$/,
+          /^#{Regexp.escape @method_term}/,
+          /#{Regexp.escape @method_term}/ ].each do |method_re|
+          unqualified_search_worker( method_re )
+          break unless @matches.empty?
+        end
       end
+
+      def unqualified_search_worker( method_re )
+        Bri::Mall.instance.stores.each do |store|
+          candidates_from_method_re( store, method_re ).each do |klass, methods|
+            methods.each do |method|
+              @matches << Bri::Match::Method.new( method_rdoc( store, klass, method ) )
+            end
+          end
+        end
+      end
+
     end
   end
 end

@@ -15,6 +15,8 @@ module Bri
               result << reflow( element.text )
             when RDoc::Markup::BlankLine
               result << ""
+            when RDoc::Markup::Rule
+              result << "-" * Bri::WIDTH
             when RDoc::Markup::Verbatim
               result << element.text
             when RDoc::Markup::Heading
@@ -26,7 +28,12 @@ module Bri
                 when :NOTE, :LABEL
                   result << "Note:"
                   result << build_description( element.items ).join( "\n" )
+                when :NUMBER
+                  result << "Numbered List:"
+                  result << build_description( element.items ).join( "\n" )
                 when :BULLET
+                  #FIXME: Add bullet symbol to each item
+                  result << "Bulletet List:"
                   result << build_description( element.items ).join( "\n" )
                 else 
                   raise "Don't know how to handle list type #{element.type}: #{element.inspect}"

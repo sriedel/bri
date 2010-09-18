@@ -15,6 +15,16 @@ module Bri
               keys
       end
 
+      def candidates_from_method_re( store, method_re )
+        candidates = {}
+        store.class_methods.each do |klass, methods|
+          matching_methods = methods.grep( method_re )
+          next if matching_methods.empty?
+          candidates[klass] = matching_methods
+        end
+        candidates
+      end
+
       def method_rdoc( store, klass = @class_term, method = @method_term )
         store.load_method( klass, method )
       end
