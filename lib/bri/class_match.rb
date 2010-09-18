@@ -16,9 +16,15 @@ module Bri
                                                          :value => c.value } }
       @attributes = rdoc_result.attributes.collect { |a| "#{a.name} (#{a.rw})" }
 
-      @class_methods, @instance_methods = rdoc_result.method_list.
-                                                      select {|m| m.visibility == :public }.
-                                                      partition { |m| m.singleton }
+      class_methods, instance_methods = rdoc_result.method_list.
+                                                    select {|m| m.visibility == :public }.
+                                                    partition { |m| m.singleton }
+      @class_methods = class_methods.collect { |m| m.name }
+      @instance_methods = instance_methods.collect { |m| m.name }
+    end
+
+    def to_s
+      ERB.new( Bri::Templates::CLASS_DESCRIPTION, nil, '<>' ).result( binding )
     end
   end
 end

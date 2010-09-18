@@ -5,7 +5,7 @@ module Bri
     end
 
     def find
-      search_instance = create_search_instance( subject, term )
+      search_instance = create_search_instance( subject, @term )
       search_instance.search( type )
       search_instance.matches
     end
@@ -25,6 +25,13 @@ module Bri
         when /^[A-Z].*#/,  /^#/    then :instance_method
         when /^[A-Z][^.#]*/        then :module
         else :method
+      end
+    end
+
+    private
+    def create_search_instance( type, term )
+      case type
+        when :module then Bri::ClassSearch.new( term )
       end
     end
   end

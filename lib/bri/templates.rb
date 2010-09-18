@@ -9,34 +9,34 @@ module Bri
     EOT
 
     CLASS_DESCRIPTION =<<-EOT
------------------------------------------------ <%= module.type %>: <%= module.name %>
-<%= module.comment || "(no description...)" %>
+----------------------------------------------- <%= type %>: <%= name %>
+<%= description_paragraphs.join("\n\n") || "(no description...)" %>
 
 ------------------------------------------------------------------------
 
-<% if module.includes %>
+<% if includes %>
 Includes:
-<%= module.includes %>
+<%= includes %>
 
 <% end %>
-<% if module.constants %>
+<% if constants %>
 Constants:
-<%= module.constants %>
+<%= constants %>
 
 <% end %>
-<% if module.class_methods %>
+<% if class_methods %>
 Class methods:
-<%= module.class_methods %>
+<%= class_methods %>
 
 <% end %>
-<% if module.instance_methods %>
+<% if instance_methods %>
 Instance methods:
-<%= module.instance_methods %>
+<%= instance_methods %>
 
 <% end %>
-<% if module.attributes %>
+<% if attributes %>
 Attributes:
-<%= module.attributes %>
+<%= attributes %>
 
 <% end %>
     EOT

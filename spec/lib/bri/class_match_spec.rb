@@ -83,8 +83,8 @@ describe Bri::ClassMatch do
       its( :includes ) { should == rdoc_class.includes.collect{ |i| i.full_name } }
       its( :constants ) { should == rdoc_class.constants.collect { |c| { :name => c.name, :value => c.value } } }
       its( :attributes ) { should == rdoc_class.attributes.collect { |a| "#{a.name} (#{a.rw})" } }
-      its( :instance_methods ) { should == rdoc_class.method_list.select { |m| m.visibility == :public && m.singleton == false } }
-      its( :class_methods ) { should == rdoc_class.method_list.select { |m| m.visibility == :public && m.singleton == true } }
+      its( :instance_methods ) { should == rdoc_class.method_list.select { |m| m.visibility == :public && m.singleton == false }.collect { |m| m.name } }
+      its( :class_methods ) { should == rdoc_class.method_list.select { |m| m.visibility == :public && m.singleton == true }.collect { |m| m.name } }
     end
   end
 end

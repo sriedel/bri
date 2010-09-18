@@ -38,6 +38,7 @@ module Bri
     if results.size == 0
       "No matching results found"
     elsif results.size == 1
+      results.first.to_s
     else
       qualified_methods = results.collect{ |result| result.qualified_name }.sort
       ERB.new( Bri::Templates::MULTIPLE_CHOICES, nil, '<>' ).result( binding )
