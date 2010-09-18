@@ -32,6 +32,10 @@ module Bri
     def create_search_instance( type, term )
       case type
         when :module then Bri::ClassSearch.new( term )
+        when :class_method then Bri::ClassMethodSearch.new( term )
+        when :instance_method then nil
+        when :method then nil
+        else nil # FIXME: Error handling
       end
     end
   end
