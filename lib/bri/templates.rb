@@ -14,29 +14,34 @@ module Bri
 
 ------------------------------------------------------------------------
 
-<% if includes %>
+<% if !includes.empty? %>
 Includes:
-<%= includes %>
+<%= includes.sort.join(", ") %>
+
 
 <% end %>
-<% if constants %>
+<% if !constants.empty? %>
 Constants:
-<%= constants %>
+<%= constants.sort.join( ", ") %>
+
 
 <% end %>
-<% if class_methods %>
+<% if !class_methods.empty? %>
 Class methods:
-<%= class_methods %>
+<%= class_methods.sort.join(", ") %>
+
 
 <% end %>
-<% if instance_methods %>
+<% if !instance_methods.empty? %>
 Instance methods:
-<%= instance_methods %>
+<%= instance_methods.sort.join( ", ") %>
+
 
 <% end %>
-<% if attributes %>
+<% if !attributes.empty? %>
 Attributes:
-<%= attributes %>
+<%= attributes.sort.join( ", " ) %>
+
 
 <% end %>
     EOT
