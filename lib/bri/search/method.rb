@@ -23,7 +23,9 @@ module Bri
 
       private
       def fully_qualified_search
-        @matches << Bri::Match::Method.new( method_rdoc( store_for_method ) )
+        store = store_for_method
+        
+        @matches << Bri::Match::Method.new( method_rdoc( store ) ) if store
       end
 
       def partially_qualified_search  
