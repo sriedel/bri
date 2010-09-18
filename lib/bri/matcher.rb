@@ -33,7 +33,7 @@ module Bri
       case type
         when :module then Bri::Search::Class.new( term )
         when :class_method then Bri::Search::ClassMethod.new( term )
-        when :instance_method then nil
+        when :instance_method then Bri::Search::InstanceMethod.new( term )
         when :method then nil
         else nil # FIXME: Error handling
       end
