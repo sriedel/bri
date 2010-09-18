@@ -1,81 +1,70 @@
 require 'spec_helper'
 
 describe Bri::Matcher do
-  describe "#match_type" do
+  describe "#type" do
+
     context "the query term begins with a capital" do
-      it "should return :fully_qualified" do
-        subject.match_type( "Foo" ).should == :fully_qualified
-      end
+      subject { Bri::Matcher.new( "Foo" ) }
+      its( :type ) { should == :fully_qualified }
     end
 
     context "the query term begins with a lower case letter" do
-      it "should return :unqualified" do
-        subject.match_type( "foo" ).should == :unqualified
-      end
+      subject { Bri::Matcher.new( "foo" ) }
+      its( :type ) { should == :unqualified }
     end
 
     context "the query term begins with a _" do
-      it "should return :unqualified" do
-        subject.match_type( "_foo" ).should == :unqualified
-      end
+      subject { Bri::Matcher.new( "_foo" ) }
+      its( :type ) { should == :unqualified }
     end
 
     context "the query begins with a ." do
-      it "should return :partially_qualified" do
-        subject.match_type( ".foo" ).should == :partially_qualified
-      end
+      subject { Bri::Matcher.new( ".foo" ) }
+      its( :type ) { should == :partially_qualified }
     end
 
     context "the query begins with a #" do
-      it "should return :paritally_qualified" do
-        subject.match_type( "#foo" ).should == :partially_qualified
-      end
+      subject { Bri::Matcher.new( "#foo" ) }
+      its( :type ) { should == :partially_qualified }
     end
 
     context "it begins with a character other than _, ., #, or a letter" do
-      it "should return :unknown" do
-        subject.match_type( "1234" ).should == :error
-      end
+      subject { Bri::Matcher.new( "2134" ) }
+      its( :type ) { should == :error }
     end
   end
 
-  describe "#match_subject" do
+  describe "#subject" do
     context "the term begins with a capital letter" do
       context "and the term contains a ." do
-        it "should return :class_method" do
-          subject.match_subject( "Foo.bar" ).should == :class_method
-        end
+        subject { Bri::Matcher.new( "Foo.bar" ) }
+        its( :subject ) { should == :class_method }
       end
 
       context "and the term contains a #" do
-        it "should return :instance_method" do
-          subject.match_subject( "Foo#bar" ).should == :instance_method
-        end
+        subject { Bri::Matcher.new( "Foo#bar" ) }
+        its( :subject ) { should == :instance_method }
       end
 
       context "and the term contains neither . nor #" do
-        it "should return :module" do
-          subject.match_subject( "FooBar" ).should == :module
-        end
+        subject { Bri::Matcher.new( "FooBar" ) }
+        its( :subject ) { should == :module }
       end
     end
   end
 
   context "the term begins with a ." do
-    it "should return :class_method" do
-      subject.match_subject( ".foo" ).should == :class_method
-    end
+    subject { Bri::Matcher.new( ".foo" ) }
+    its( :subject ) { should == :class_method }
   end
 
   context "the term begins with a #" do
-    it "should return :instance_method" do 
-      subject.match_subject( "#foo" ).should == :instance_method
-    end
+    subject { Bri::Matcher.new( "#foo" ) }
+    its( :subject ) { should == :instance_method }
   end
 
   context "the term begins with neither a capital letter nor . or #" do
-    it "should return :method" do
-      subject.match_subject( "foo" ).should == :method
-    end
+    subject { Bri::Matcher.new( "foo" ) }
+    its( :subject ) { should == :method }
   end
 end

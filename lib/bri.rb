@@ -33,8 +33,7 @@ module Bri
   end
 
   def self.ri( query )
-    matcher = Bri::Matcher.new
-    results = matcher.find( query )
+    results = Bri::Matcher.new( query ).find
 
     if results.size == 0
       "No matching results found"
