@@ -1,7 +1,10 @@
 $: << File.dirname( __FILE__ )
+require 'erb'
+
 require 'bri/mall'
 require 'bri/match'
 require 'bri/matcher'
+require 'bri/templates'
 
 module Bri
   WIDTH = 72
@@ -36,13 +39,8 @@ module Bri
       "No matching results found"
     elsif results.size == 1
     else
-      formatted_rows = format_elements( results.collect { |result| result.qualified_name }.sort )
-
-      output = []
-      output << '------------------------------------------------------ Multiple choices:'
-      output << ''
-      output << formatted_rows.collect { |row| row.join( ', ' ) }.join( ",\n" )
-      output.join( "\n" )
+      qualified_methods = results.collect{ |result| result.qualified_name }.sort
+      ERB.new( Bri::Templates::MULTIPLE_CHOICES, nil, '<>' ).result( binding )
     end
   end
 
