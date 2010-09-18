@@ -20,8 +20,8 @@ module Bri
                   store.class_methods.has_key?( @class_term ) &&
                   store.class_methods[@class_term].include?( @method_term )
                 end
-        @matches << Bri::ClassMethodMatch.new( store.load_method( @class_term, 
-                                                                  @method_term ) )
+        @matches << Bri::Match::ClassMethod.new( store.load_method( @class_term, 
+                                                                    @method_term ) )
       end
     end
   end
