@@ -1,5 +1,10 @@
 #!/usr/bin/env ruby
 require 'bri'
 
+if ARGV.size != 1 
+  STDERR.puts "Usage: #{$0} <reference>"
+  exit 0
+end
+
 result = Bri.ri( ARGV[0] )
 puts result

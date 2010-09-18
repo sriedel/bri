@@ -17,8 +17,10 @@ module Bri
               result << ""
             when RDoc::Markup::Verbatim
               result << element.parts.join
+            when RDoc::Markup::Heading
+              result << '  ' * element.level + element.text
             else  
-              raise "Don't know how to handle type #{element.class}"
+              raise "Don't know how to handle type #{element.class}: #{element.inspect}"
           end
         end
         result

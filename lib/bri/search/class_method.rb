@@ -9,8 +9,14 @@ module Bri
         end
       end
 
-      def method_rdoc( store )
-        store.load_method( @class_term, @method_term ) 
+      def classes_with_method( store, method )
+        store.class_methods.
+              select { |klass, methods| methods.include? method }.
+              keys
+      end
+
+      def method_rdoc( store, klass = @class_term, method = @method_term )
+        store.load_method( klass, method )
       end
     end
   end

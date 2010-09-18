@@ -10,7 +10,7 @@ module Bri
         @full_name = rdoc_method.full_name
         @call_syntaxes = rdoc_method.call_seq.split( "\n" ).
                                               map { |e| "  " + e }.
-                                              join( "\n" ) + "\n"
+                                              join( "\n" ) + "\n" rescue ''
         @description_paragraphs = build_description( rdoc_method.comment.parts )
       end
     end

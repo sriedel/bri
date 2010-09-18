@@ -1,11 +1,11 @@
 module Bri
   module Templates
     MULTIPLE_CHOICES =<<-EOT
------------------------------------------------------- Multiple choices:
+<%= Bri::Templates::Helpers.hrule( "Multiple choices:" ) %>
 
-<% format_elements( qualified_methods.map { |m| m + ', ' } ).each do |row| %>
-    <%= row.join %>
-<% end %>
+<%= Bri::Templates::Helpers.array_to_width( qualified_methods.sort ) %>
+
+
     EOT
 
     CLASS_DESCRIPTION =<<-EOT
@@ -70,10 +70,12 @@ module Bri
           Term::ANSIColor::bold + text + Term::ANSIColor::reset + 
           "\n"
       end
+      module_function :hrule
 
       def section_header( text )
         Term::ANSIColor::green + Term::ANSIColor::underline + text + Term::ANSIColor::reset + "\n"
       end
+      module_function :section_header
 
       def array_to_width( array, width = Bri::WIDTH, separator = ", ", indent_steps = 1 )
         indentation = '  '
@@ -95,11 +97,13 @@ module Bri
         rows << row
         rows
       end
+      module_function :array_to_width
 
       def add_separators( array, separator )
         last_element = array.pop
         array.map { |e| e + separator } + [ last_element ]
       end
+      module_function :add_separators
     end
   end
 end

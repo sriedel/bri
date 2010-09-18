@@ -23,7 +23,11 @@ module Bri
       end
 
       def partially_qualified_search  
-        raise "Implement me!"
+        Bri::Mall.instance.stores.each do |store|
+          classes_with_method( store, @method_term ).each do |klass|
+            @matches << Bri::Match::Method.new( method_rdoc( store, klass, @method_term ) )
+          end
+        end
       end
 
       def unqualified_search
