@@ -10,48 +10,82 @@ module Bri
 
     CLASS_DESCRIPTION =<<-EOT
 ----------------------------------------------- <%= type %>: <%= name %>
-<%= description_paragraphs.join("\n\n") || "(no description...)" %>
+<% if description_paragraphs.empty? %>
+  (no description...)
+<% else %>
+<% description_paragraphs.each do |paragraph| %>
+<%= array_to_width( paragraph.split( /\s+/ ), 72, " ") %>
+<% end %>
+<% end %>
 
 ------------------------------------------------------------------------
 
 <% if !includes.empty? %>
 Includes:
-<%= includes.sort.join(", ") %>
+<%= array_to_width( includes.sort ) %>
 
 
 <% end %>
 <% if !constants.empty? %>
 Constants:
-<%= constants.sort.join( ", ") %>
+<%= array_to_width( constants.sort ) %>
 
 
 <% end %>
 <% if !class_methods.empty? %>
 Class methods:
-<%= class_methods.sort.join(", ") %>
+<%= array_to_width( class_methods.sort ) %>
 
 
 <% end %>
 <% if !instance_methods.empty? %>
 Instance methods:
-<%= instance_methods.sort.join( ", ") %>
+<%= array_to_width( instance_methods.sort ) %>
 
 
 <% end %>
 <% if !attributes.empty? %>
 Attributes:
-<%= attributes.sort.join( ", " ) %>
+<%= array_to_width( attributes.sort ) %>
 
 
 <% end %>
     EOT
+
+    METHOD_DESCRIPTION =<<-EOT
+  ------------------------------------------------- <%= method.module %><%= method.separator %><%= method.name %>
+       <%= method.name %>(<%= method.arglist %>)
+  ------------------------------------------------------------------------
+       <%= method.comment %>
+
+    EOT
+
+    module Helpers
+      def array_to_width( array, width = Bri::WIDTH, separator = ", " )
+        indentation = '  '
+        rows = '' + indentation
+        row = ''
+        row_length = 0
+
+        array = add_separators( array, separator )
+
+        array.each do |element|
+          if row.length + element.length >= width
+            rows << row + "\n" + indentation
+            row = ''
+          end
+
+          row << element
+        end
+
+        rows << row
+        rows
+      end
+
+      def add_separators( array, separator )
+        last_element = array.pop
+        array.map { |e| e + separator } + [ last_element ]
+      end
+    end
   end
-
-  METHOD_DESCRIPTION =<<-EOT
-------------------------------------------------- <%= method.module %><%= method.separator %><%= method.name %>
-     <%= method.name %>(<%= method.arglist %>)
-------------------------------------------------------------------------
-     <%= method.comment %>
-
-  EOT
 end

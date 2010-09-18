@@ -79,7 +79,7 @@ describe Bri::ClassMatch do
 
       its( :type ) { should == rdoc_class.type }
       its( :name ) { should == rdoc_class.name }
-      its( :description_paragraphs ) { should == fake_description.parts.collect { |p| p.parts.join } }
+      its( :description_paragraphs ) { should == fake_description.parts.collect { |p| p.parts.join( " " ) } }
       its( :includes ) { should == rdoc_class.includes.collect{ |i| i.full_name } }
       its( :constants ) { should == rdoc_class.constants.collect { |c| { :name => c.name, :value => c.value } } }
       its( :attributes ) { should == rdoc_class.attributes.collect { |a| "#{a.name} (#{a.rw})" } }
