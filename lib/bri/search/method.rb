@@ -10,6 +10,8 @@ module Bri
         if @class_term !~ /^[A-Z]/ && @method_term.nil?
           @method_term, @class_term = @class_term, @method_term
         end
+
+        @class_term = nil if @class_term == ""
       end
 
       def search( type = :fully_qualified )
