@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Bri::ClassMatch do
+describe Bri::Match::Class do
   let( :fake_paragraph ) do
     mock( RDoc::Markup::Paragraph, :parts => [ "This is row one", 
                                                "And this is row 2" ] )
@@ -75,7 +75,7 @@ describe Bri::ClassMatch do
 
   describe "#initialize" do
     context "a class with everything" do
-      subject { Bri::ClassMatch.new( rdoc_class ) }
+      subject { Bri::Match::Class.new( rdoc_class ) }
 
       its( :type ) { should == rdoc_class.type }
       its( :name ) { should == rdoc_class.name }
