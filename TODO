@@ -1,0 +1,4 @@
+- Prepend/markup list items properly
+- Extend unqualified search to include class methods and case insensitive searches
+- Misc. error handlings
+- Do more specs
