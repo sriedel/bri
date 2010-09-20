@@ -1,3 +1,40 @@
+= What is this ?
+During the days of Ruby 1.8, the ri command was slow. I mean really slow. Glacially. Starting a web browser and looking up a class or method description on ruby-doc.org often felt faster.
+
+Then Mauricio Fernandez produced fastri and qri that produced results a whole lot faster than the native ri tool. Unfortunately, Mauricio seems to have lost interest and didn't port fastri to ruby 1.9. There are patches porting fastri to 1.9.1, but they are iffy and don't work well with 1.9.2 and the new rdoc cache format.
+
+Now with ruby 1.9 and the rdoc 2.x gem ri is very responsive. However the output format looks like darkfish without the HTML and uses up a lot of space. And subjectively, it's ugly.
+
+This is where bri comes in: it tries to emulate fastri/qris output format and lookup patterns while using the new rdoc 2.x infrastructure.
+
+To compare, do 'ri Array' and 'bri Array' and see which appeals more to you.
+
+= Too... much... text...
+Bri is a Beautiful RI formatter.
+
+= Usage
+
+ bri Array # looks up the class description of Array in the ri documentation
+
+ bri Array.class_method # looks up the class method of the given class
+
+ bri Array#instance_method # looks up the instance method of the given class
+
+ bri .class_method # looks up the class method in any class
+
+ bri #instance_method # looks up the instance method in any class
+
+ bri method # looks up an instance method in any class, first looking for
+            # an exact match, then methods names where the beginning matches
+            # the given search term, and finally looking for the term
+            # anywhere in the method name
+
+= Requirements
+ * Ruby 1.9.2
+ * rdoc 2.5.x
+ * term-ansicolor
+
+
 = The Cheesy Stuff
 There are many bries, but there is only one RI bri. 
 (Apologies to Pierre).
