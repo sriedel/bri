@@ -6,5 +6,4 @@ if ARGV.size != 1
   exit 0
 end
 
-result = Bri.ri( ARGV[0] )
-puts result
+puts Bri.ri( ARGV[0] )
