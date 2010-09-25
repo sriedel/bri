@@ -14,10 +14,11 @@ module Bri
       def initialize( rdoc_result )
         @type = rdoc_result.type
         @name = rdoc_result.name
-        @description_paragraphs = rdoc_result.comment.parts.collect { |p| p.parts.join( " " ) }
+        @description_paragraphs = build_description( rdoc_result.comment.parts )
         @includes = rdoc_result.includes.collect { |i| i.full_name }
-        @constants = rdoc_result.constants.collect { |c| { :name => c.name,
-                                                           :value => c.value } }
+        @constants = rdoc_result.constants.collect do |c|
+                       c.value ? "#{c.name} = #{c.value}" : c.name
+                     end
         @attributes = rdoc_result.attributes.collect { |a| "#{a.name} (#{a.rw})" }
 
         class_methods, instance_methods = rdoc_result.method_list.

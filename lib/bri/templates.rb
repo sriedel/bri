@@ -85,7 +85,7 @@ module Bri
 
         array = add_separators( array, separator )
 
-        array.each do |element|
+        array.compact.each do |element|
           if row.length + element.length >= width
             rows << row + "\n" + indentation * indent_steps
             row = ''
