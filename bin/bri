@@ -1,9 +1,23 @@
 #!/usr/bin/env ruby
 require 'bri'
+require 'optparse'
 
-if ARGV.size != 1 
-  STDERR.puts "Usage: #{$0} <reference>"
-  exit 0
+@options = {
+  :list_classes => false
+}
+
+def parse_options 
+  parser = OptionParser.new do |opts|
+    opts.on( nil, "--classes", "List known classes" ) { |v| @options[:list_classes] = true }
+    opts.on_tail( "-h", "--help", "This help text" ) { puts opts; exit }
+  end
+  parser.parse!( ARGV )
 end
 
-puts Bri.ri( ARGV[0] )
+parse_options
+
+if @options[:list_classes] 
+  puts Bri.list_classes
+else
+  puts Bri.ri( ARGV[0] )
+end

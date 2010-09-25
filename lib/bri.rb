@@ -47,5 +47,9 @@ module Bri
     end
   end
 
+  def self.list_classes
+    Bri::Mall.instance.classes.join("\n" )
+  end
+
 end
 
