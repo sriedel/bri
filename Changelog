@@ -1,0 +1,4 @@
+0.1.2
+  - Add --list-methods
+  - Add --list-names
+  - Add -w/--width and width evaluation from the COLUMNS environment variable
