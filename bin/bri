@@ -13,6 +13,7 @@ def parse_options
     opts.on( nil, "--classes", "List known classes" ) { |v| @options[:list_classes] = true }
     opts.on( nil, "--methods", "List known methods" ) { |v| @options[:list_methods] = true }
     opts.on( "-l", "--list-names", "List known namespaces/methods" ) { |v| @options[:list_names] = true }
+    opts.on( "-w", "--width [COLUMNS]", "Set the output width", Integer ) { |v| Bri.width = v.to_i - 8 }
     opts.on_tail( "-h", "--help", "This help text" ) { puts opts; exit }
   end
   parser.parse!( ARGV )

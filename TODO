@@ -2,5 +2,3 @@
 - Extend unqualified search to include class methods and case insensitive searches
 - Misc. error handlings
 - Do more specs
-- Add command line option parsing and help
-- Set output width dynamically leveraging all synergy effects

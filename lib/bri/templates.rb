@@ -14,7 +14,7 @@ module Bri
   (no description...)
 <% else %>
 <% description_paragraphs.each do |paragraph| %>
-<%= array_to_width( paragraph.split( /\s+/ ), 72, " ") %>
+<%= array_to_width( paragraph.split( /\s+/ ), Bri.width, " ") %>
 <% end %>
 <% end %>
 
@@ -65,7 +65,7 @@ module Bri
     EOT
 
     module Helpers
-      def hrule( text = '', width = Bri::WIDTH )
+      def hrule( text = '', width = Bri.width )
         '-' * ( width - text.length - 1 ) + " " + 
           Term::ANSIColor::bold + text + Term::ANSIColor::reset + 
           "\n"
@@ -77,7 +77,7 @@ module Bri
       end
       module_function :section_header
 
-      def array_to_width( array, width = Bri::WIDTH, separator = ", ", indent_steps = 1 )
+      def array_to_width( array, width = Bri.width, separator = ", ", indent_steps = 1 )
         indentation = '  '
         rows = '' + indentation * indent_steps
         row = ''

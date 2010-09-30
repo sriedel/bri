@@ -16,7 +16,7 @@ module Bri
             when RDoc::Markup::BlankLine
               result << ""
             when RDoc::Markup::Rule
-              result << "-" * Bri::WIDTH
+              result << "-" * Bri.width
             when RDoc::Markup::Verbatim
               result << element.text
             when RDoc::Markup::Heading
@@ -45,7 +45,7 @@ module Bri
         result
       end
 
-      def reflow( text, width = Bri::WIDTH )
+      def reflow( text, width = Bri.width )
         array_to_width( text.split( /\s+/ ), width, " ", 1 )
       end
     end

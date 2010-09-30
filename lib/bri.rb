@@ -10,7 +10,7 @@ require 'bri/search'
 require 'bri/match'
 
 module Bri
-  WIDTH = 72
+  DEFAULT_WIDTH = 72
 
   def self.format_elements( array )
     rows = []
@@ -20,7 +20,7 @@ module Bri
     array.each do |element|
       element_length_with_separator = element.length + 2
 
-      if row_length + element_length_with_separator >= WIDTH
+      if row_length + element_length_with_separator >= Bri.width
         rows << row
         row = []
         row_length = 0
@@ -45,6 +45,14 @@ module Bri
       qualified_methods = results.collect{ |result| result.full_name }.sort
       ERB.new( Bri::Templates::MULTIPLE_CHOICES, nil, '<>' ).result( binding )
     end
+  end
+
+  def self.width
+    @@width ||= [ ( ENV['COLUMNS'] || 80 ) - 8, 1 ].max
+  end
+
+  def self.width=( width )
+    @@width = [ width, 1 ].max
   end
 
   def self.list_classes
