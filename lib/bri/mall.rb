@@ -12,6 +12,22 @@ module Bri
       @stores.collect { |store| store.modules }.flatten.uniq.sort
     end
 
+    def class_methods
+      Bri::Mall.instance.stores.map do |store|
+        store.class_methods.map do |klass, methods|
+          methods.map { |method| "#{klass}.#{method}" }
+        end
+      end.flatten.uniq
+    end
+
+    def instance_methods
+      Bri::Mall.instance.stores.map do |store|
+        store.instance_methods.map do |klass, methods|
+          methods.map { |method| "#{klass}##{method}" }
+        end
+      end.flatten.uniq
+    end
+
     private
     def initialize
       @stores = []

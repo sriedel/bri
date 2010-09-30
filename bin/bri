@@ -3,12 +3,16 @@ require 'bri'
 require 'optparse'
 
 @options = {
-  :list_classes => false
+  :list_classes => false,
+  :list_methods => false,
+  :list_names   => false
 }
 
 def parse_options 
   parser = OptionParser.new do |opts|
     opts.on( nil, "--classes", "List known classes" ) { |v| @options[:list_classes] = true }
+    opts.on( nil, "--methods", "List known methods" ) { |v| @options[:list_methods] = true }
+    opts.on( "-l", "--list-names", "List known namespaces/methods" ) { |v| @options[:list_names] = true }
     opts.on_tail( "-h", "--help", "This help text" ) { puts opts; exit }
   end
   parser.parse!( ARGV )
@@ -18,6 +22,10 @@ parse_options
 
 if @options[:list_classes] 
   puts Bri.list_classes
+elsif @options[:list_methods]
+  puts Bri.list_methods
+elsif @options[:list_names]
+  puts Bri.list_names
 else
   puts Bri.ri( ARGV[0] )
 end
