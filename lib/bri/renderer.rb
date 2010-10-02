@@ -46,8 +46,15 @@ module Bri
     def replace_markup( text )
       text.gsub!( "<tt>", Term::ANSIColor::cyan )
       text.gsub!( "</tt>", Term::ANSIColor::reset )
+
+      text.gsub!( "<code>", Term::ANSIColor::cyan )
+      text.gsub!( "</code>", Term::ANSIColor::reset )
+
       text.gsub!( "<h>", Term::ANSIColor::green )
       text.gsub!( "</h>", Term::ANSIColor::reset )
+
+      text.gsub!( /\+(.*?)\+/, "#{Term::ANSIColor::yellow}\\1#{Term::ANSIColor::reset}" )
+      text.gsub!( /_(.*?)_/, "#{Term::ANSIColor::yellow}\\1#{Term::ANSIColor::reset}" )
       text
     end
 
