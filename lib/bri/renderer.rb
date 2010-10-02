@@ -25,7 +25,7 @@ module Bri
                when RDoc::Markup::Verbatim
                  element.text
                when RDoc::Markup::Heading
-                 INDENT * element.level + element.text
+                 "<h>#{element.text}</h>"
                when RDoc::Markup::ListItem
                  element.label.to_s + element.parts.collect { |part| extract_text part, width }.join
                when RDoc::Markup::List
@@ -44,6 +44,10 @@ module Bri
     end
 
     def replace_markup( text )
+      text.gsub!( "<tt>", Term::ANSIColor::cyan )
+      text.gsub!( "</tt>", Term::ANSIColor::reset )
+      text.gsub!( "<h>", Term::ANSIColor::green )
+      text.gsub!( "</h>", Term::ANSIColor::reset )
       text
     end
 
