@@ -54,8 +54,6 @@ module Bri
     base_width = 80 if base_width == 0
 
     @@width ||= [ base_width - 8, 1 ].max
-    STDERR.puts "Set width with #{ENV['COLUMNS']} to #{@@width}"
-    @@width
   end
 
   def self.width=( width )
