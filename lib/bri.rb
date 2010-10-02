@@ -3,6 +3,7 @@ require 'erb'
 require 'term/ansicolor'
 
 
+require 'bri/renderer'
 require 'bri/mall'
 require 'bri/matcher'
 require 'bri/templates'
@@ -48,7 +49,13 @@ module Bri
   end
 
   def self.width
-    @@width ||= [ ( ENV['COLUMNS'] || 80 ) - 8, 1 ].max
+    return @@width if defined?( @@width )
+    base_width = ENV['COLUMNS'].to_i 
+    base_width = 80 if base_width == 0
+
+    @@width ||= [ base_width - 8, 1 ].max
+    STDERR.puts "Set width with #{ENV['COLUMNS']} to #{@@width}"
+    @@width
   end
 
   def self.width=( width )
