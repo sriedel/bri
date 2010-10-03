@@ -55,10 +55,10 @@ module Bri
       text.gsub!( "<h>", Term::ANSIColor::green )
       text.gsub!( "</h>", Term::ANSIColor::reset )
 
-      text.gsub!( /(^\s)\+(.*?)\+(\s|$)/, 
-                  "\\1#{Term::ANSIColor::yellow}\\2#{Term::ANSIColor::reset}\\3" )
-      text.gsub!( /(^|\s)_(.*?)_(\s|$)/, 
-                  "\\1#{Term::ANSIColor::yellow}\\2#{Term::ANSIColor::reset}\\3" )
+      text.gsub!( /(^|\s)\+(.*?)\+/, 
+                  "\\1#{Term::ANSIColor::yellow}\\2#{Term::ANSIColor::reset}" )
+      text.gsub!( /(^|\s)_(.*?)_/, 
+                  "\\1#{Term::ANSIColor::yellow}\\2#{Term::ANSIColor::reset}" )
       text
     end
 
