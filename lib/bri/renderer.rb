@@ -32,9 +32,9 @@ module Bri
                  element.label.to_s + element.parts.collect { |part| extract_text part, width }.join
                when RDoc::Markup::List
                  prefix = case element.type
-                            when :NOTE, :LABEL then "Note:" 
-                            when :NUMBER       then "Numbered List:"
-                            when :BULLET       then "Bulletet List:"
+                            when :NOTE, :LABEL then "Note:\n" 
+                            when :NUMBER       then "Numbered List:\n"
+                            when :BULLET       then "Bulletet List:\n"
                             else 
                               raise "Don't know how to handle list type #{element.type}: #{element.inspect}"
                           end
@@ -72,28 +72,33 @@ module Bri
     end
 
     def wrap_to_width( styled_text, width )
+      styled_text.split( "\n" ).collect { |row| wrap_row row, width }.join
+    end
+
+    def wrap_row( physical_row, width )
       output_text = ''
-      row = ''
+      logical_row = ''
       printable_row_length = 0
-      scanner = StringScanner.new( styled_text )
+
+      scanner = StringScanner.new( physical_row )
 
       while( !scanner.eos? ) 
         token = scanner.scan( /\S+/ ).to_s
         printable_token_length = printable_length( token )
 
         if printable_token_length + printable_row_length > width
-          output_text << row << "\n"
-          row = ''
+          output_text << logical_row << "\n"
+          logical_row = ''
           printable_row_length = 0
         end
-        row << token
+        logical_row << token
         printable_row_length += printable_token_length
 
         token = scanner.scan( /\s*/ ).to_s
-        row << token
+        logical_row << token
         printable_row_length += token.length
       end
-      output_text << row << "\n"
+      output_text << logical_row << "\n"
     end
 
     def indent( text )
