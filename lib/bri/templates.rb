@@ -13,9 +13,7 @@ module Bri
 <% if description_paragraphs.empty? %>
   (no description...)
 <% else %>
-<% description_paragraphs.each do |paragraph| %>
-<%= array_to_width( paragraph.split( /\s+/ ), Bri.width, " ") %>
-<% end %>
+<%= description_paragraphs.join("\n" ) %>
 <% end %>
 
 <%= hrule %>
