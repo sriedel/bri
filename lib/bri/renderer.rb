@@ -1,3 +1,5 @@
+require 'strscan'
+
 module Bri
   class Renderer
     INDENT = ' ' * 2
@@ -60,12 +62,38 @@ module Bri
       text
     end
 
+    def printable_length( text )
+      embedded_ansi_codes = text.scan( Term::ANSIColor::COLORED_REGEXP )
+      if embedded_ansi_codes.empty?
+        text.length
+      else
+        text.length - embedded_ansi_codes.reduce( 0 ) { |total, code| code.length + total }
+      end
+    end
+
     def wrap_to_width( styled_text, width )
-      paragraphs = styled_text.split( "\n\n" )
-      paragraphs.collect do |paragraph|
-        paragraph.gsub!( "\s+", ' ' )
-        paragraph.gsub!(/(.{1,#{width}})(\s+|$)/, "\\1\n")
-      end * "\n"
+      output_text = ''
+      row = ''
+      printable_row_length = 0
+      scanner = StringScanner.new( styled_text )
+
+      while( !scanner.eos? ) 
+        token = scanner.scan( /\S+/ ).to_s
+        printable_token_length = printable_length( token )
+
+        if printable_token_length + printable_row_length > width
+          output_text << row << "\n"
+          row = ''
+          printable_row_length = 0
+        end
+        row << token
+        printable_row_length += printable_token_length
+
+        token = scanner.scan( /\s*/ ).to_s
+        row << token
+        printable_row_length += token.length
+      end
+      output_text << row << "\n"
     end
 
     def indent( text )
