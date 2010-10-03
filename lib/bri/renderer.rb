@@ -53,17 +53,18 @@ module Bri
       text.gsub!( "<h>", Term::ANSIColor::green )
       text.gsub!( "</h>", Term::ANSIColor::reset )
 
-      text.gsub!( /\+(.*?)\+/, "#{Term::ANSIColor::yellow}\\1#{Term::ANSIColor::reset}" )
-      text.gsub!( /_(.*?)_/, "#{Term::ANSIColor::yellow}\\1#{Term::ANSIColor::reset}" )
+      text.gsub!( /(^\s)\+(.*?)\+(\s|$)/, 
+                  "\\1#{Term::ANSIColor::yellow}\\2#{Term::ANSIColor::reset}\\3" )
+      text.gsub!( /(^|\s)_(.*?)_(\s|$)/, 
+                  "\\1#{Term::ANSIColor::yellow}\\2#{Term::ANSIColor::reset}\\3" )
       text
     end
 
     def wrap_to_width( styled_text, width )
-      # Ripped from ActiveSupport
-      styled_text.split("\n").collect do |line|
-        line.length > width ? 
-          line.gsub(/(.{1,#{width}})(\s+|$)/, "\\1\n").strip : 
-          line
+      paragraphs = styled_text.split( "\n\n" )
+      paragraphs.collect do |paragraph|
+        paragraph.gsub!( "\s+", ' ' )
+        paragraph.gsub!(/(.{1,#{width}})(\s+|$)/, "\\1\n")
       end * "\n"
     end
 
