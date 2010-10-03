@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "bri"
-  s.version = "0.1.2"
+  s.version = "0.1.3"
 
   s.required_ruby_version = ">= 1.9.2"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
                 lib/bri/search/class_method.rb
                 lib/bri/search/instance_method.rb
                 lib/bri/templates.rb
+                lib/bri/renderer.rb
                 spec/spec_helper.rb
                 spec/lib/bri/mall_spec.rb
                 spec/lib/bri/matcher_spec.rb
