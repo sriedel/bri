@@ -63,12 +63,7 @@ module Bri
     end
 
     def printable_length( text )
-      embedded_ansi_codes = text.scan( Term::ANSIColor::COLORED_REGEXP )
-      if embedded_ansi_codes.empty?
-        text.length
-      else
-        text.length - embedded_ansi_codes.reduce( 0 ) { |total, code| code.length + total }
-      end
+      Term::ANSIColor.uncolored( text ).length
     end
 
     def wrap_to_width( styled_text, width )
