@@ -8,12 +8,27 @@ module Bri
     end
 
     def render( element, width = Bri.width )
-      text = extract_text( element, width )
-      styled_text = replace_markup( text )
-      element.kind_of?( RDoc::Markup::Verbatim ) ? 
-        wrapped_text = styled_text :
-        wrapped_text = wrap_to_width( styled_text, width )
-      indent( wrapped_text )
+      case element
+        when RDoc::Markup::Verbatim 
+          text = extract_text( element, width )
+          styled_text = replace_markup( text )
+          indent( styled_text )
+        when RDoc::Markup::List
+          rendered_items = element.items.collect { |item| render( item, width - INDENT.length ) }
+          rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
+          if element.type == :BULLET
+            rendered_items.map! { |item| ' *' + item }
+          elsif element.type == :NUMBER
+            rendered_items.each_with_index { |item, index| sprintf "%d.%s", index, item }
+          end
+
+          rendered_items.join( "\n\n" ) + "\n"
+        else
+          text = extract_text( element, width )
+          styled_text = replace_markup( text )
+          wrapped_text = wrap_to_width( styled_text, width )
+          indent( wrapped_text )
+      end
     end
 
     def extract_text( element, width )
@@ -27,7 +42,7 @@ module Bri
                when RDoc::Markup::Verbatim
                  element.text
                when RDoc::Markup::Heading
-                 "<h>#{element.text}</h>"
+                 "<h>#{element.text}</h>" 
                when RDoc::Markup::ListItem
                  element.label.to_s + element.parts.collect { |part| extract_text part, width }.join
                when RDoc::Markup::List
