@@ -45,15 +45,6 @@ module Bri
                  "<h>#{element.text}</h>" 
                when RDoc::Markup::ListItem
                  element.label.to_s + element.parts.collect { |part| extract_text part, width }.join
-               when RDoc::Markup::List
-                 prefix = case element.type
-                            when :NOTE, :LABEL then "Note:\n" 
-                            when :NUMBER       then "Numbered List:\n"
-                            when :BULLET       then "Bulletet List:\n"
-                            else 
-                              raise "Don't know how to handle list type #{element.type}: #{element.inspect}"
-                          end
-                 prefix + element.items.collect { |item| extract_text item, width }.join
                else  
                  raise "Don't know how to handle type #{element.class}: #{element.inspect}"
              end
