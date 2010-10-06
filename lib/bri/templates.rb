@@ -64,9 +64,14 @@ module Bri
 
     module Helpers
       def hrule( text = '', width = Bri.width )
-        '-' * ( width - text.length - 1 ) + " " + 
-          Term::ANSIColor::bold + text + Term::ANSIColor::reset + 
-          "\n"
+        if text == ''
+          '-' * width + "\n"
+        else
+          text = " " + text if text != ''
+          '-' * ( width - text.length ) + 
+            Term::ANSIColor::bold + text + Term::ANSIColor::reset + 
+            "\n"
+        end
       end
       module_function :hrule
 
