@@ -13,16 +13,21 @@ module Bri
           text = extract_text( element, width )
           styled_text = replace_markup( text )
           indent( styled_text )
+
         when RDoc::Markup::List
-          rendered_items = element.items.collect { |item| render( item, width - INDENT.length ) }
+          item_width = width - INDENT.length
+          rendered_items = element.items.collect { |item| render item, item_width }
           rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
-          if element.type == :BULLET
-            rendered_items.map! { |item| ' *' + item }
-          elsif element.type == :NUMBER
-            rendered_items.each_with_index { |item, index| sprintf "%d.%s", index, item }
+          case element.type
+            when :BULLET 
+              rendered_items.map! { |item| ' *' + item }
+            when :NUMBER
+              i = 0
+              rendered_items.map! { |item| i+=1; sprintf "%d.%s", i, item }
           end
 
           rendered_items.join( "\n\n" ) + "\n"
+
         else
           text = extract_text( element, width )
           styled_text = replace_markup( text )
