@@ -24,6 +24,8 @@ module Bri
             when :NUMBER
               i = 0
               rendered_items.map! { |item| i+=1; sprintf "%d.%s", i, item }
+            when :NOTE, :LABEL
+              # do nothing
           end
 
           rendered_items.join( "\n\n" ) + "\n"
@@ -49,7 +51,10 @@ module Bri
                when RDoc::Markup::Heading
                  "<h>#{element.text}</h>" 
                when RDoc::Markup::ListItem
-                 element.label.to_s + element.parts.collect { |part| extract_text part, width }.join
+                 parts = element.parts.collect { |part| extract_text part, width }.join
+                 element.label ? "#{element.label}: #{parts}" : parts
+               when RDoc::Markup::List
+                 render( element, width - INDENT.length )
                else  
                  raise "Don't know how to handle type #{element.class}: #{element.inspect}"
              end
