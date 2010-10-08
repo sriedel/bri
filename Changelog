@@ -1,3 +1,7 @@
+0.1.5
+  - Fix rendering of nested lists
+  - Fix highlighting of sequences of + and _ characters
+
 0.1.4
   - Better rendering of list items
   - Bulleted Lists now have bullets in front of the list items
