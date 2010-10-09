@@ -5,7 +5,7 @@ describe Bri::Search::InstanceMethod do
     let( :paragraph ) { RDoc::Markup::Paragraph.new( "Foo Description" ) }
     let( :document ) { mock( RDoc::Markup::Document, :parts => [ paragraph ] ) }
     let( :rdoc_method ) { mock( RDoc::AnyMethod, :full_name => "Foo",
-                                                 :call_seq => "",
+                                                 :arglists => "",
                                                  :comment => document ) }
     before( :each ) do
       store_one = mock( RDoc::RI::Store, :load_cache => true, 

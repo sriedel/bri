@@ -11,7 +11,7 @@ describe Bri::Match::Method do
 
   let( :rdoc_method ) do
     mock( RDoc::AnyMethod, :full_name => "This::IS::My.full_name",
-                           :call_seq => "First\nSecond\nThird",
+                           :arglists => "First\nSecond\nThird",
                            :comment => fake_description )
   end
 
