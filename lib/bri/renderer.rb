@@ -1,13 +1,10 @@
 require 'strscan'
 
 module Bri
-  class Renderer
+  module Renderer
     INDENT = ' ' * 2
 
-    def initialize
-    end
-
-    def render( element, width = Bri.width )
+    def self.render( element, width = Bri.width )
       case element
         when RDoc::Markup::Verbatim 
           text = extract_text( element, width )
@@ -38,7 +35,7 @@ module Bri
       end
     end
 
-    def extract_text( element, width )
+    def self.extract_text( element, width )
       text = case element
                when RDoc::Markup::Paragraph 
                  element.text
@@ -61,7 +58,7 @@ module Bri
       text + "\n"
     end
 
-    def replace_markup( text )
+    def self.replace_markup( text )
       text.gsub!( "<tt>", Term::ANSIColor::cyan )
       text.gsub!( "</tt>", Term::ANSIColor::reset )
 
@@ -78,15 +75,19 @@ module Bri
       text
     end
 
-    def printable_length( text )
+    def self.printable_length( text )
       Term::ANSIColor.uncolored( text ).length
     end
 
-    def wrap_to_width( styled_text, width )
+    def self.wrap_list( array, width = Bri.width )
+      indent( wrap_to_width( array.join(", "), width ) )
+    end
+
+    def self.wrap_to_width( styled_text, width )
       styled_text.split( "\n" ).collect { |row| wrap_row row, width }.join
     end
 
-    def wrap_row( physical_row, width )
+    def self.wrap_row( physical_row, width )
       output_text = ''
       logical_row = ''
       printable_row_length = 0
@@ -112,7 +113,7 @@ module Bri
       output_text << logical_row << "\n"
     end
 
-    def indent( text )
+    def self.indent( text )
       text.split( "\n" ).collect { |row| "#{INDENT}#{row}" }.join("\n" )
     end
   end

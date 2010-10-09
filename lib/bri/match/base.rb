@@ -1,7 +1,6 @@
 module Bri
   module Match
     class Base
-      @@renderer = Bri::Renderer.new
       def to_s
         ERB.new( self.class.const_get( :TEMPLATE ), nil, '<>' ).
             result( binding )
@@ -9,7 +8,7 @@ module Bri
 
       private 
       def build_description( source )
-        source.collect { |element| @@renderer.render element }
+        source.collect { |element| Bri::Renderer.render element }
       end
     end
   end
