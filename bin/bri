@@ -10,6 +10,15 @@ require 'optparse'
 
 def parse_options 
   parser = OptionParser.new do |opts|
+    opts.banner = "Usage: #{$0} [options] <method_name>"
+    opts.separator ""
+    opts.separator "  method_name should be in one of the following formats:"
+    opts.separator ""
+    opts.separator "  * ClassOrModuleName#instance_method_name"
+    opts.separator "  * ClassOrModuleName.class_method_name"
+    opts.separator "  * #instance_method_name"
+    opts.separator "  * .class_method_name"
+    opts.separator ""
     opts.on( nil, "--classes", "List known classes" ) { |v| @options[:list_classes] = true }
     opts.on( nil, "--methods", "List known methods" ) { |v| @options[:list_methods] = true }
     opts.on( "-l", "--list-names", "List known namespaces/methods" ) { |v| @options[:list_names] = true }
@@ -17,6 +26,10 @@ def parse_options
     opts.on_tail( "-h", "--help", "This help text" ) { puts opts; exit }
   end
   parser.parse!( ARGV )
+  if ARGV.size == 0
+    puts parser.summarize
+    exit 0
+  end
 end
 
 parse_options
