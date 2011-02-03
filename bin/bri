@@ -26,6 +26,7 @@ def parse_options
     opts.on_tail( "-h", "--help", "This help text" ) { puts opts; exit }
   end
   parser.parse!( ARGV )
+
   if ARGV.size == 0
     puts parser.summarize
     exit 0

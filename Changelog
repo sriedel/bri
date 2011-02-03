@@ -1,6 +1,8 @@
 0.1.5
   - Fix rendering of nested lists
   - Fix highlighting of sequences of + and _ characters
+  - Add a more elaborate help banner
+  - Show the help banner if no arguments are passed to the executable
 
 0.1.4
   - Better rendering of list items
