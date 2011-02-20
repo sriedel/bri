@@ -3,6 +3,7 @@ require 'strscan'
 module Bri
   module Renderer
     INDENT = ' ' * 2
+    ALPHABET = ('a'..'z').to_a
 
     def self.render( element, width = Bri.width )
       case element
@@ -18,11 +19,20 @@ module Bri
           case element.type
             when :BULLET 
               rendered_items.map! { |item| ' *' + item }
+
             when :NUMBER
               i = 0
               rendered_items.map! { |item| i+=1; sprintf "%d.%s", i, item }
-            when :NOTE, :LABEL
+
+            when :LALPHA
+              i = -1
+              rendered_items.map! { |item| i+=1; sprintf "%s.%s", ALPHABET[i], item }
+              
+            when :LABEL
               # do nothing
+
+            when :NOTE
+              # FIXME: not lined up yet
           end
 
           rendered_items.join( "\n\n" ) + "\n"
