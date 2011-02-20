@@ -13,7 +13,7 @@ module Bri
 
       def initialize( rdoc_result )
         @type = rdoc_result.type
-        @name = rdoc_result.name
+        @name = rdoc_result.full_name
         @description_paragraphs = build_description( rdoc_result.comment.parts )
         @includes = rdoc_result.includes.collect { |i| i.full_name }
         @constants = rdoc_result.constants.collect do |c|
