@@ -99,7 +99,7 @@ module Bri
       text.gsub!( /(^|\s)_(.*?[a-zA-Z0-9]+.*?)_/, 
                   "\\1#{Term::ANSIColor::yellow}\\2#{Term::ANSIColor::reset}" )
 
-      text.gsub!( %r{\b((?:https?|ftp)://[-\w.?%&=]+)\b}, 
+      text.gsub!( %r{\b((?:https?|ftp)://[-\w.?%&=/]+)\b}, 
                   "#{Term::ANSIColor::underline}\\1#{Term::ANSIColor::reset}" )
 
       text.gsub!( %r{\b(mailto:[-\w.%]+@[-\w.]+)\b}, 
