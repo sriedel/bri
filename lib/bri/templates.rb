@@ -68,7 +68,7 @@ module Bri
           '-' * width + "\n"
         else
           text = " " + text if text != ''
-          '-' * ( width - text.length ) + Term::ANSIColor::bold( text ) + "\n"
+          ( '-' * [ ( width - text.length ), 1 ].max ) + Term::ANSIColor::bold( text ) + "\n"
         end
       end
       module_function :hrule
