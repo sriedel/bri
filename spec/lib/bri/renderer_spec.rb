@@ -75,7 +75,7 @@ describe Bri::Renderer do
     end
 
     it "should start second lines of a list item with the same left alignment as the first list items content" do
-      pending "FIXME"
+      STDERR.puts subject.inspect
       subject.should =~ /\n \*  First item in a bulleted list\n    With a second line\n/
     end
 

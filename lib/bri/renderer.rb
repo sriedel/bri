@@ -57,7 +57,7 @@ module Bri
     def self.extract_text( element, width, label_alignment_width = 0 )
       text = case element
                when RDoc::Markup::Paragraph 
-                 element.text
+                 element.parts.join( "\n" )
                when RDoc::Markup::BlankLine
                  ""
                when RDoc::Markup::Rule
