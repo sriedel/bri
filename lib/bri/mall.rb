@@ -34,7 +34,8 @@ module Bri
 
       # We want: system, site, home and gem documentation
       RDoc::RI::Paths.each( true, true, true, true ) do |path, type|
-        @stores << RDoc::RI::Store.new( path, type ).tap { |store| store.load_cache }
+        @stores << RDoc::RI::Store.new( path, type ).
+                                   tap { |store| store.load_cache }
       end
     end
 
