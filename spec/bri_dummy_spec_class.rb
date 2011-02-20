@@ -111,13 +111,14 @@ class BriDummySpecClass
   # Text with stylings: *bold*, _emphasized_ and +monospaced+. 
   def simple_styling_rendering_test_method; end
   
-  # Also with html: <b>Bold</b>, <em>emphasized</em>, <i>also emphasized</i> and <tt>monospaced</tt> or <code>monospaced</code>. 
+  # Also with html: <b>Bold</b>, <em>emphasized</em>, <i>also emphasized</i> 
+  # and <tt>monospaced tt</tt> or <code>monospaced code</code>. 
   def html_styling_rendering_test_method; end
 
   # These should not be styled: \<b>Not bold\</b>, \<em>not emphasized\</em>.
   def escaped_styling_rendering_test_method; end
 
-  # Furthermore, this text contains links to raw links http://www.google.com mailto:spamidyspam@spam.com ftp://warez.teuto.de and plain web links: www.test.com.
+  # Furthermore, this text contains links to raw links http://www.google.com mailto:spamidyspam@spam.com ftp://warez.teuto.de and plain web links: www.test.com .
   #
   # Then we have local links to other files: link:/etc/fstab
   def raw_link_rendering_test_method; end
