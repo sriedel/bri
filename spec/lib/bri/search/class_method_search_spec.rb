@@ -87,4 +87,84 @@ describe Bri::Search::ClassMethod do
       end
     end
   end
+
+  context "real searches going through rdoc" do
+    context "a fully qualified search" do
+      context "with no matching methods" do
+        it "should have no matches" do
+          search_instance = Bri::Search::ClassMethod.new( "BriDummySpecClass.i_dont_exist" )
+          search_instance.search( :fully_qualified )
+          search_instance.matches.should be_empty
+        end
+      end
+
+      context "with a matching method" do
+        it "should have a match" do
+          search_instance = Bri::Search::ClassMethod.new( "BriDummySpecClass.bri_dummy_spec_singleton_method" )
+          search_instance.search( :fully_qualified )
+          search_instance.matches.should_not be_empty
+          search_instance.matches.first.full_name.should == "BriDummySpecClass::bri_dummy_spec_singleton_method"
+        end
+      end
+    end
+
+    context "a partially qualified search" do
+      context "with no matching methods" do
+        it "should have no matches" do
+          search_instance = Bri::Search::ClassMethod.new( ".i_dont_exist" )
+          search_instance.search( :partially_qualified )
+          search_instance.matches.should be_empty
+        end
+      end
+
+      context "with one matching method" do
+        it "should have one match" do
+          search_instance = Bri::Search::ClassMethod.new( ".bri_dummy_spec_singleton_method" )
+          search_instance.search( :partially_qualified )
+          search_instance.matches.should_not be_empty
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass::bri_dummy_spec_singleton_method" }.should be_true
+        end
+      end
+
+      context "with multiple matching methods" do
+        it "should have all matches" do
+          search_instance = Bri::Search::ClassMethod.new( ".bri_dummy_spec_second_singleton_method" )
+          search_instance.search( :partially_qualified )
+          search_instance.matches.should_not be_empty
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass::bri_dummy_spec_second_singleton_method" }.should be_true
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClassTwo::bri_dummy_spec_second_singleton_method" }.should be_true
+        end
+      end
+    end
+
+    context "an unqualified search" do
+      context "with no matching methods" do
+        it "should have no matches" do
+          search_instance = Bri::Search::ClassMethod.new( "i_dont_exist_go_away" )
+          search_instance.search( :unqualified )
+          search_instance.matches.should be_empty
+        end
+      end
+
+      context "with one matching method" do
+        it "should have one match" do
+          search_instance = Bri::Search::ClassMethod.new( "bri_dummy_spec_singleton_method" )
+          search_instance.search( :unqualified )
+          search_instance.matches.should_not be_empty
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass::bri_dummy_spec_singleton_method" }.should be_true
+        end
+      end
+
+      context "with multiple matching methods" do
+        it "should have all matches" do
+          search_instance = Bri::Search::ClassMethod.new( "bri_dummy_spec" )
+          search_instance.search( :unqualified )
+          search_instance.matches.should_not be_empty
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass::bri_dummy_spec_singleton_method" }.should be_true
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass::bri_dummy_spec_second_singleton_method" }.should be_true
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClassTwo::bri_dummy_spec_second_singleton_method" }.should be_true
+        end
+      end
+    end
+  end
 end
