@@ -55,7 +55,10 @@ module Bri
       def partially_qualified_search  
         Bri::Mall.instance.stores.each do |store|
           classes_with_method( store, @method_term ).each do |klass|
-            @matches << Bri::Match::Method.new( method_rdoc( store, klass, @method_term ) )
+            match_data = method_rdoc( store, klass, @method_term ) 
+            next unless match_data
+
+            @matches << Bri::Match::Method.new( match_data )
           end
         end
       end
@@ -73,7 +76,10 @@ module Bri
         Bri::Mall.instance.stores.each do |store|
           candidates_from_method_re( store, method_re ).each do |klass, methods|
             methods.each do |method|
-              @matches << Bri::Match::Method.new( method_rdoc( store, klass, method ) )
+              match_data = method_rdoc( store, klass, method )
+              next unless match_data
+
+              @matches << Bri::Match::Method.new( match_data )
             end
           end
         end
