@@ -6,6 +6,7 @@ module Bri
     ALPHABET = ('a'..'z').to_a
 
     def self.render( element, width = Bri.width )
+      # STDERR.puts "Rendering #{element.inspect}"
       case element
         when RDoc::Markup::Verbatim 
           text = extract_text( element, width )
@@ -69,19 +70,38 @@ module Bri
     end
 
     def self.replace_markup( text )
-      text.gsub!( "<tt>", Term::ANSIColor::cyan )
-      text.gsub!( "</tt>", Term::ANSIColor::reset )
+      text.gsub!( /(?<!\\)<(?:tt|code)>/, Term::ANSIColor::cyan )
+      text.gsub!( /(?<!\\)<\/(?:tt|code)>/, Term::ANSIColor::reset )
 
-      text.gsub!( "<code>", Term::ANSIColor::cyan )
-      text.gsub!( "</code>", Term::ANSIColor::reset )
+      text.gsub!( /(?<!\\)<b>/, Term::ANSIColor::bold )
+      text.gsub!( /(?<!\\)<\/b>/, Term::ANSIColor::reset )
+
+      text.gsub!( /(?<!\\)<(?:em|i)>/, Term::ANSIColor::yellow )
+      text.gsub!( /(?<!\\)<\/(?:em|i)>/, Term::ANSIColor::reset )
 
       text.gsub!( "<h>", Term::ANSIColor::green )
       text.gsub!( "</h>", Term::ANSIColor::reset )
 
+      text.gsub!( "\\<", "<" )
+
+      text.gsub!( /(^|\s)\*(.*?[a-zA-Z0-9]+.*?)\*/, 
+                  "\\1#{Term::ANSIColor::bold}\\2#{Term::ANSIColor::reset}" )
       text.gsub!( /(^|\s)\+(.*?[a-zA-Z0-9]+.*?)\+/, 
-                  "\\1#{Term::ANSIColor::yellow}\\2#{Term::ANSIColor::reset}" )
+                  "\\1#{Term::ANSIColor::cyan}\\2#{Term::ANSIColor::reset}" )
       text.gsub!( /(^|\s)_(.*?[a-zA-Z0-9]+.*?)_/, 
                   "\\1#{Term::ANSIColor::yellow}\\2#{Term::ANSIColor::reset}" )
+
+      text.gsub!( %r{\b((?:https?|ftp)://[-\w.?%&=]+)\b}, 
+                  "#{Term::ANSIColor::underline}\\1#{Term::ANSIColor::reset}" )
+
+      text.gsub!( %r{\b(mailto:[-\w.%]+@[-\w.]+)\b}, 
+                  "#{Term::ANSIColor::underline}\\1#{Term::ANSIColor::reset}" )
+
+      text.gsub!( %r{\b((?<!:\/\/)www.[-\w.?%&=]+)\b}, 
+                  "#{Term::ANSIColor::underline}\\1#{Term::ANSIColor::reset}" )
+
+      text.gsub!( %r{\blink:(.*?)(\s|$)}, 
+                  "#{Term::ANSIColor::underline}\\1#{Term::ANSIColor::reset}\\2" )
       text
     end
 
