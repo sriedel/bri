@@ -75,7 +75,6 @@ describe Bri::Renderer do
     end
 
     it "should start second lines of a list item with the same left alignment as the first list items content" do
-      STDERR.puts subject.inspect
       subject.should =~ /\n \*  First item in a bulleted list\n    With a second line\n/
     end
 
@@ -299,21 +298,17 @@ describe Bri::Renderer do
     end
 
     context "labeled links" do
-      context "with single word labels" do
-        subject { render_description_for_method "labled_link" }
+      subject { render_description_for_method "labeled_link" }
 
+      context "with single word labels" do
         it "should show the link underlined after the label in brackets" do
-          pending "To be implemented"
-          subject.should =~ /Labled links SingleWorldLabel \(#{underline}http:\/\/duckduckgo.com#{reset}\)/
+          subject.should =~ /Labled links SingleWordLabel \(#{underline}http:\/\/duckduckgo.com#{reset}\)/
         end
       end
 
       context "with multi word labels" do
-        subject { render_description_for_method "" }
-
         it "should show the link underlined after the label in brackets and remove the rdoc label curly braces" do
-          pending "To be implemented"
-          subject.should =~ /Multi World Labels \(#{underline}http:\/\/www.github.com#{reset}\)/
+          subject.should =~ /Multi Word Labels \(#{underline}http:\/\/www.github.com#{reset}\)/
         end
       end
     end

@@ -123,7 +123,8 @@ class BriDummySpecClass
   # Then we have local links to other files: link:/etc/fstab
   def raw_link_rendering_test_method; end
 
-  # Plus: Labled links SingleWordLabel[http://duckduckgo.com] and {Multi Word Labels}[http://www.github.com].
+  # Plus: Labled links SingleWordLabel[http://duckduckgo.com] and 
+  # {Multi Word Labels}[http://www.github.com].
   def labeled_link_rendering_test_method; end
 
   # Conversion characters: this: -- or --- should be an em-dash. We also have an ellipsis: ... . Copyright: (c) and registered trademark (r).

@@ -110,6 +110,10 @@ module Bri
 
       text.gsub!( %r{\blink:(.*?)(\s|$)}, 
                   "#{Term::ANSIColor::underline}\\1#{Term::ANSIColor::reset}\\2" )
+
+      text.gsub!( %r{\{(.*?)\}\[(.*?)\]}, "\\1 (\\2)" )
+      text.gsub!( %r{\[(#{Regexp.escape( Term::ANSIColor::underline )}.*?#{Regexp.escape( Term::ANSIColor::reset )})\]}, 
+                  " (\\1)" )
       text
     end
 
