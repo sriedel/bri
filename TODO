@@ -1,3 +1,5 @@
 - Extend unqualified search to include class methods and case insensitive searches
-- Misc. error handlings
-- Do more specs
+- {multi word label}[links] won't display correctly if the label is right where
+  a line wrap occurs
+- Refactor the convoluted rendering of lists and list items
+- Detect ansi capabilities and use what is possible with graceful degradation?

@@ -1,3 +1,17 @@
+0.2.0
+  - Add extensive specs for matching, searching and rendering
+  - Fix bug with rendering very narrow horizontal rules
+  - Fix bug with wrong color for +monospaced+ vs <tt>monospaced</tt> styles
+  - Recognize <tt> as an alias for <code>
+  - Recognize <i> as an alias for <em>
+  - Add ANSI bold sequences for *bold* and <b>bold</b> text
+  - Add recognition and styling of links
+  - Correctly indent the second and further parts of a list item
+  - Correctly display lettered lists
+  - Correctly display aligned labeled lists
+  - Allow escaping of \<html> tags
+  - Be more robust when missing encountering a missing ri file reference
+
 0.1.5
   - Fix rendering of nested lists
   - Fix highlighting of sequences of + and _ characters
