@@ -27,7 +27,8 @@ def parse_options
   end
   parser.parse!( ARGV )
 
-  if ARGV.size == 0
+  if ARGV.size == 0 && 
+    !( @options[:list_classes] || @options[:list_methods] || @options[:list_names] )
     puts parser.summarize
     exit 0
   end
