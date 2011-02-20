@@ -1,16 +1,16 @@
 Gem::Specification.new do |s|
   s.name = "bri"
-  s.version = "0.1.5"
+  s.version = "0.2.0"
 
   s.required_ruby_version = ">= 1.9.2"
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sven Riedel"]
-  s.date = %q{2011-02-04}
+  s.date = %q{2011-02-20}
   s.description = %q{An alternative to the ri command}
   s.add_dependency( 'term-ansicolor', '>= 1.0.5' )
   s.add_dependency( 'rdoc',           '~> 3.5.2' )
 
-  s.summary = %q{Beautified RI in the spirit of fastri/qri. Unlike fastri, bri builds on top of the rdoc 2.x backend, only output and formatting is handled by bri}
+  s.summary = %q{Beautified RI in the spirit of fastri/qri. Unlike fastri, bri builds on top of the rdoc 2.x/3.x backend, only output and formatting is handled by bri}
   s.email = %q{sr@gimp.org}
   s.homepage = %q{http://github.com/sriedel/bri}
 
@@ -42,12 +42,14 @@ Gem::Specification.new do |s|
                 lib/bri/templates.rb
                 lib/bri/renderer.rb
                 spec/spec_helper.rb
+                spec/bri_dummy_spec_class.rb
                 spec/lib/bri/mall_spec.rb
                 spec/lib/bri/matcher_spec.rb
-                spec/lib/bri/match/class_match_spec.rb
-                spec/lib/bri/match/method_match_spec.rb
+                spec/lib/bri/renderer_spec.rb
+                spec/lib/bri/match/class_spec.rb
+                spec/lib/bri/match/method_spec.rb
                 spec/lib/bri/search/class_spec.rb
-                spec/lib/bri/search/class_method_search_spec.rb
+                spec/lib/bri/search/class_method_spec.rb
                 spec/lib/bri/search/instance_method_spec.rb
                 spec/lib/bri/search/method_spec.rb
               }
