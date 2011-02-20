@@ -100,7 +100,7 @@ class BriDummySpecClass
   def labeled_list_rendering_test_method; end
 
   # First:: With some text.
-  # Secondarily: Lets see if this lines up.
+  # Secondarily:: Lets see if this lines up.
   def lined_up_labeled_list_rendering_test_method; end
 
   # * a list item

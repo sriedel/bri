@@ -209,7 +209,6 @@ describe Bri::Renderer do
       end
 
       it "should have the list item bodies left aligned to the same position" do
-        pending "Not yet implemented"
         subject.should =~ /First:       With some text\./
         subject.should =~ /Secondarily: Lets see if this lines up\./
       end

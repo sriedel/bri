@@ -5,7 +5,7 @@ module Bri
     INDENT = ' ' * 2
     ALPHABET = ('a'..'z').to_a
 
-    def self.render( element, width = Bri.width )
+    def self.render( element, width = Bri.width, alignment_width = 0 )
       # STDERR.puts "Rendering #{element.inspect}"
       case element
         when RDoc::Markup::Verbatim 
@@ -15,38 +15,46 @@ module Bri
 
         when RDoc::Markup::List
           item_width = width - INDENT.length
-          rendered_items = element.items.collect { |item| render item, item_width }
-          rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
           case element.type
             when :BULLET 
+              rendered_items = element.items.collect { |item| render item, item_width }
+              rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
               rendered_items.map! { |item| ' *' + item }
 
             when :NUMBER
               i = 0
+              rendered_items = element.items.collect { |item| render item, item_width }
+              rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
               rendered_items.map! { |item| i+=1; sprintf "%d.%s", i, item }
 
             when :LALPHA
               i = -1
+              rendered_items = element.items.collect { |item| render item, item_width }
+              rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
               rendered_items.map! { |item| i+=1; sprintf "%s.%s", ALPHABET[i], item }
               
             when :LABEL
               # do nothing
+              rendered_items = element.items.collect { |item| render item, item_width }
+              rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
 
             when :NOTE
-              # FIXME: not lined up yet
+              alignment_width = element.items.collect { |item| item.label.size }.max + 1
+              rendered_items = element.items.collect { |item| render item, item_width, alignment_width }
+              rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
           end
 
           rendered_items.join( "\n\n" ) + "\n"
 
         else
-          text = extract_text( element, width )
+          text = extract_text( element, width, alignment_width )
           styled_text = replace_markup( text )
           wrapped_text = wrap_to_width( styled_text, width )
           indent( wrapped_text )
       end
     end
 
-    def self.extract_text( element, width )
+    def self.extract_text( element, width, label_alignment_width = 0 )
       text = case element
                when RDoc::Markup::Paragraph 
                  element.text
@@ -60,7 +68,7 @@ module Bri
                  "<h>#{element.text}</h>" 
                when RDoc::Markup::ListItem
                  parts = element.parts.collect { |part| extract_text part, width }.join
-                 element.label ? "#{element.label}: #{parts}" : parts
+                 element.label ? sprintf( "%*s %s", -label_alignment_width, "#{element.label}:", parts ) : parts
                when RDoc::Markup::List
                  render( element, width - INDENT.length )
                else  
