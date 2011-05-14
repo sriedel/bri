@@ -9,9 +9,9 @@ module Bri
 
       attr_reader :type, :name, :description_paragraphs
       attr_reader :includes, :constants, :class_methods, :instance_methods
-      attr_reader :attributes
+      attr_reader :attributes, :origin
 
-      def initialize( rdoc_result )
+      def initialize( rdoc_result, store = nil )
         @type = rdoc_result.type
         @name = rdoc_result.full_name
         @description_paragraphs = build_description( rdoc_result.comment.parts )
@@ -26,6 +26,7 @@ module Bri
                                                       partition { |m| m.singleton }
         @class_methods = class_methods.collect { |m| m.name }
         @instance_methods = instance_methods.collect { |m| m.name }
+        @origin = store ? store.friendly_path : nil
       end
 
     end

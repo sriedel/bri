@@ -13,12 +13,14 @@ describe Bri::Search::Class do
   describe "#search" do
     context "basic functionality" do
       before( :each ) do
-        store_one = mock( RDoc::RI::Store, :load_cache => true, 
-                                           :load_class => true,
-                                           :modules => %w{ ClassThree } )
-        store_two = mock( RDoc::RI::Store, :load_cache => true, 
-                                           :load_class => true,
-                                           :modules => %w{ ClassOne ClassTwo } )
+        store_one = mock( RDoc::RI::Store, :load_cache    => true,
+                                           :load_class    => true,
+                                           :friendly_path => "ruby core",
+                                           :modules       => %w{ ClassThree } )
+        store_two = mock( RDoc::RI::Store, :load_cache    => true,
+                                           :load_class    => true,
+                                           :friendly_path => "ruby core",
+                                           :modules       => %w{ ClassOne ClassTwo } )
         Bri::Mall.instance.stub!( :stores => [ store_one, store_two ] )
         Bri::Match::Class.stub!( :new ).and_return( mock( Bri::Match::Class ) )
       end

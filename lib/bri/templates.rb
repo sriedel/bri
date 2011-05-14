@@ -10,6 +10,8 @@ module Bri
 
     CLASS_DESCRIPTION =<<-EOT
 <%= hrule( type + ": " + name ) %>
+<%= print_origin( origin ) %>
+
 <% if description_paragraphs.empty? %>
   (no description...)
 <% else %>
@@ -52,6 +54,8 @@ module Bri
 
     METHOD_DESCRIPTION =<<-EOT
 <%= hrule( full_name ) %>
+<%= print_origin( origin ) %>
+
 <%= call_syntaxes %>
 <%= hrule %>
 <% if description_paragraphs.empty? %>
@@ -72,6 +76,11 @@ module Bri
         end
       end
       module_function :hrule
+
+      def print_origin( origin_text, width = Bri.width )
+        return unless origin_text
+        "(#{origin_text})".rjust( width )
+      end
 
       def section_header( text )
         Term::ANSIColor::green + Term::ANSIColor::underline + text + Term::ANSIColor::reset + "\n"

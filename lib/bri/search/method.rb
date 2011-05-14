@@ -27,7 +27,7 @@ module Bri
       def fully_qualified_search
         store = store_for_method
         
-        @matches << Bri::Match::Method.new( method_rdoc( store ) ) if store
+        @matches << Bri::Match::Method.new( method_rdoc( store ), store ) if store
       end
 
       def store_for_method
@@ -58,7 +58,7 @@ module Bri
             match_data = method_rdoc( store, klass, @method_term ) 
             next unless match_data
 
-            @matches << Bri::Match::Method.new( match_data )
+            @matches << Bri::Match::Method.new( match_data, store )
           end
         end
       end
@@ -79,7 +79,7 @@ module Bri
               match_data = method_rdoc( store, klass, method )
               next unless match_data
 
-              @matches << Bri::Match::Method.new( match_data )
+              @matches << Bri::Match::Method.new( match_data, store )
             end
           end
         end

@@ -8,15 +8,17 @@ describe Bri::Search::ClassMethod do
                                                  :arglists => "",
                                                  :comment => document ) }
     before( :each ) do
-      store_one = mock( RDoc::RI::Store, :load_cache => true, 
-                                         :load_class => true,
-                                         :load_method => rdoc_method,
-                                         :modules    => %w{ ClassThree },
+      store_one = mock( RDoc::RI::Store, :load_cache    => true,
+                                         :load_class    => true,
+                                         :load_method   => rdoc_method,
+                                         :friendly_path => "ruby core",
+                                         :modules       => %w{ ClassThree },
                                          :class_methods => { "ClassThree" => [ "method" ] } )
-      store_two = mock( RDoc::RI::Store, :load_cache => true, 
-                                         :load_class => true,
-                                         :load_method => rdoc_method,
-                                         :modules    => %w{ ClassOne ClassTwo },
+      store_two = mock( RDoc::RI::Store, :load_cache    => true,
+                                         :load_class    => true,
+                                         :load_method   => rdoc_method,
+                                         :friendly_path => "ruby core",
+                                         :modules       => %w{ ClassOne ClassTwo },
                                          :class_methods => { "ClassOne" => [ "method" ],
                                                              "ClassTwo" => [ "method", "my_other_method" ] } )
       Bri::Mall.instance.stub!( :stores => [ store_one, store_two ] )
