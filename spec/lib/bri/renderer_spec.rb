@@ -308,7 +308,7 @@ describe Bri::Renderer do
 
       context "with multi word labels" do
         it "should show the link underlined after the label in brackets and remove the rdoc label curly braces" do
-          subject.should =~ /Multi Word Labels \(#{underline}http:\/\/www.github.com#{reset}\)/
+          subject.should =~ /Multi\s+Word\s+Labels\s+\(#{underline}http:\/\/www.github.com#{reset}\)/m
         end
       end
     end

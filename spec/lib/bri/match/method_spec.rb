@@ -20,7 +20,7 @@ describe Bri::Match::Method do
 
     its( :full_name ) { should == rdoc_method.full_name }
     its( :call_syntaxes ) { should == "  First\n  Second\n  Third\n" }
-    its( :description_paragraphs ) { should == [ "  This is line one\n  This is line two" ] }
+    its( :description_paragraphs ) { should == [ "  This is line one This is line two" ] }
   end
 
   describe "#full_name" do
