@@ -11,7 +11,7 @@ module Bri
         when RDoc::Markup::Verbatim 
           text = extract_text( element, width )
           styled_text = replace_markup( text )
-          indent( styled_text )
+          indent( styled_text ) + "\n"
 
         when RDoc::Markup::List
           item_width = width - INDENT.length
@@ -57,7 +57,7 @@ module Bri
     def self.extract_text( element, width, label_alignment_width = 0 )
       text = case element
                when RDoc::Markup::Paragraph 
-                 element.parts.join( " " )
+                 element.parts.join( " " ) 
                when RDoc::Markup::BlankLine
                  ""
                when RDoc::Markup::Rule
