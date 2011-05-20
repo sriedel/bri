@@ -1,3 +1,6 @@
+0.2.1
+  - Show origin of class/method in description output
+
 0.2.0
   - Add extensive specs for matching, searching and rendering
   - Fix bug with rendering very narrow horizontal rules
