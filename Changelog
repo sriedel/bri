@@ -1,5 +1,8 @@
 0.2.1
   - Show origin of class/method in description output
+  - Better textflow within paragraphs by ignoring the original newlines
+  - But keep original newlines within list items
+  - Add missing newline after verbatim sections
 
 0.2.0
   - Add extensive specs for matching, searching and rendering

@@ -54,10 +54,11 @@ module Bri
       end
     end
 
-    def self.extract_text( element, width, label_alignment_width = 0 )
+    def self.extract_text( element, width, label_alignment_width = 0, conserve_newlines = false )
       text = case element
                when RDoc::Markup::Paragraph 
-                 element.parts.join( " " ) 
+                 join_char = conserve_newlines ? "\n" : " "
+                 element.parts.join( join_char )
                when RDoc::Markup::BlankLine
                  ""
                when RDoc::Markup::Rule
@@ -67,7 +68,7 @@ module Bri
                when RDoc::Markup::Heading
                  "<h>#{element.text}</h>" 
                when RDoc::Markup::ListItem
-                 parts = element.parts.collect { |part| extract_text part, width }.join
+                 parts = element.parts.collect { |part| extract_text part, width, 0, true }.join
                  element.label ? sprintf( "%*s %s", -label_alignment_width, "#{element.label}:", parts ) : parts
                when RDoc::Markup::List
                  render( element, width - INDENT.length )
