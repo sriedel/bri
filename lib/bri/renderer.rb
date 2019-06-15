@@ -54,9 +54,14 @@ module Bri
 
         else
           text = extract_text( element, width, alignment_width )
-          styled_text = replace_markup( text )
-          wrapped_text = wrap_to_width( styled_text, width )
-          indent( wrapped_text )
+
+          if text == "\n"
+            nil
+          else
+            styled_text = replace_markup( text )
+            wrapped_text = wrap_to_width( styled_text, width )
+            indent( wrapped_text )
+          end
       end
     end
 
