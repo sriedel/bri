@@ -71,7 +71,7 @@ module Bri
                when RDoc::Markup::Rule
                  "-" * width
                when RDoc::Markup::Verbatim
-                 element.text
+                 element.parts.map { |part| "   #{part}" }.join
                when RDoc::Markup::Heading
                  "<h>#{element.text}</h>" 
                when RDoc::Markup::ListItem
