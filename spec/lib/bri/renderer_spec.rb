@@ -75,7 +75,7 @@ describe Bri::Renderer do
     end
 
     it "should start second lines of a list item with the same left alignment as the first list items content" do
-      subject.should =~ /\n \*  First item in a bulleted list\n    With a second line\n/
+      subject.should =~ /\n \*  First item in a bulleted list(?:\s*?)\n    With a second line\n/
     end
 
     context "contained verbatim text" do

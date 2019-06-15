@@ -47,7 +47,7 @@ describe Bri::Match::Class do
 
   describe "#description_paragraphs" do
     it "should be empty for an undocumented class" do
-      empty_class.description_paragraphs.should be_empty
+      empty_class.description_paragraphs.should == [ '' ]
     end
 
     it "should contain rendered text for a documented class" do

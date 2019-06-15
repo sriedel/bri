@@ -3,7 +3,8 @@ require 'strscan'
 module Bri
   module Renderer
     INDENT = ' ' * 2
-    ALPHABET = ('a'..'z').to_a
+    LOWER_ALPHABET = ('a'..'z').to_a
+    UPPER_ALPHABET = ('A'..'Z').to_a
 
     def self.render( element, width = Bri.width, alignment_width = 0 )
       # STDERR.puts "Rendering #{element.inspect}"
@@ -17,30 +18,36 @@ module Bri
           item_width = width - INDENT.length
           case element.type
             when :BULLET 
-              rendered_items = element.items.collect { |item| render item, item_width }
+              rendered_items = element.items.map { |item| render( item, item_width ) }
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
               rendered_items.map! { |item| ' *' + item }
 
             when :NUMBER
               i = 0
-              rendered_items = element.items.collect { |item| render item, item_width }
+              rendered_items = element.items.map { |item| render( item, item_width ) }
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
               rendered_items.map! { |item| i+=1; sprintf "%d.%s", i, item }
 
             when :LALPHA
               i = -1
-              rendered_items = element.items.collect { |item| render item, item_width }
+              rendered_items = element.items.map { |item| render( item, item_width ) }
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
-              rendered_items.map! { |item| i+=1; sprintf "%s.%s", ALPHABET[i], item }
+              rendered_items.map! { |item| i+=1; sprintf "%s.%s", LOWER_ALPHABET[i], item }
+
+            when :UALPHA
+              i = -1
+              rendered_items = element.items.map { |item| render( item, item_width ) }
+              rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
+              rendered_items.map! { |item| i+=1; sprintf "%s.%s", UPPER_ALPHABET[i], item }
               
             when :LABEL
               # do nothing
-              rendered_items = element.items.collect { |item| render item, item_width }
+              rendered_items = element.items.map { |item| render( item, item_width ) }
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
 
             when :NOTE
-              alignment_width = element.items.collect { |item| item.label.size }.max + 1
-              rendered_items = element.items.collect { |item| render item, item_width, alignment_width }
+              alignment_width = element.items.flat_map(&:label).map(&:size).max + 1
+              rendered_items = element.items.map { |item| render( item, item_width, alignment_width ) }
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
           end
 
@@ -56,7 +63,7 @@ module Bri
 
     def self.extract_text( element, width, label_alignment_width = 0, conserve_newlines = false )
       text = case element
-               when RDoc::Markup::Paragraph 
+               when RDoc::Markup::Paragraph
                  join_char = conserve_newlines ? "\n" : " "
                  element.parts.join( join_char )
                when RDoc::Markup::BlankLine
@@ -69,9 +76,17 @@ module Bri
                  "<h>#{element.text}</h>" 
                when RDoc::Markup::ListItem
                  parts = element.parts.collect { |part| extract_text part, width, 0, true }.join
-                 element.label ? sprintf( "%*s %s", -label_alignment_width, "#{element.label}:", parts ) : parts
+                 if element.label
+                   labels = element.label.map { |l| "#{l}:" }.join("\n")
+                   sprintf( "%*s %s", -label_alignment_width, labels, parts )
+                 else
+                   parts
+                 end
                when RDoc::Markup::List
                  render( element, width - INDENT.length )
+                when RDoc::Markup::Document
+                  extracted_parts = element.parts.map { |part| extract_text( part, width, label_alignment_width, conserve_newlines ) }
+                  extracted_parts.empty? ? '' : extracted_parts.join("\n")
                else  
                  raise "Don't know how to handle type #{element.class}: #{element.inspect}"
              end
