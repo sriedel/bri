@@ -2,6 +2,8 @@ require 'strscan'
 
 module Bri
   module Renderer
+    Color = ::Term::ANSIColor
+
     INDENT = ' ' * 2
     INDENT_WIDTH = 2
     LOWER_ALPHABET = ('a'..'z').to_a.map { |char| "#{char}." }.freeze
@@ -100,44 +102,44 @@ module Bri
     end
 
     def self.replace_markup( text )
-      text.gsub!( /(?<!\\)<(?:tt|code)>/, Term::ANSIColor.cyan )
-      text.gsub!( /(?<!\\)<\/(?:tt|code)>/, Term::ANSIColor.reset )
+      text.gsub!( /(?<!\\)<(?:tt|code)>/, Color.cyan )
+      text.gsub!( /(?<!\\)<\/(?:tt|code)>/, Color.reset )
 
-      text.gsub!( /(?<!\\)<b>/, Term::ANSIColor.bold )
-      text.gsub!( /(?<!\\)<\/b>/, Term::ANSIColor.reset )
+      text.gsub!( /(?<!\\)<b>/, Color.bold )
+      text.gsub!( /(?<!\\)<\/b>/, Color.reset )
 
-      text.gsub!( /(?<!\\)<(?:em|i)>/, Term::ANSIColor.yellow )
-      text.gsub!( /(?<!\\)<\/(?:em|i)>/, Term::ANSIColor.reset )
+      text.gsub!( /(?<!\\)<(?:em|i)>/, Color.yellow )
+      text.gsub!( /(?<!\\)<\/(?:em|i)>/, Color.reset )
 
-      text.gsub!( "<h>", Term::ANSIColor.green )
-      text.gsub!( "</h>", Term::ANSIColor.reset )
+      text.gsub!( "<h>", Color.green )
+      text.gsub!( "</h>", Color.reset )
 
       text.gsub!( "\\<", "<" )
 
       text.gsub!( /(#\s*=>)(.*)/,
-                  "#{Term::ANSIColor.dark}\\1#{Term::ANSIColor.reset}#{Term::ANSIColor.bold}\\2#{Term::ANSIColor.reset}" )
+                  "#{Color.dark}\\1#{Color.reset}#{Color.bold}\\2#{Color.reset}" )
 
       text.gsub!( /(^|\s)\*(.*?[a-zA-Z0-9]+.*?)\*/, 
-                  "\\1#{Term::ANSIColor.bold}\\2#{Term::ANSIColor.reset}" )
+                  "\\1#{Color.bold}\\2#{Color.reset}" )
       text.gsub!( /(^|\s)\+(.*?[a-zA-Z0-9]+.*?)\+/, 
-                  "\\1#{Term::ANSIColor.cyan}\\2#{Term::ANSIColor.reset}" )
+                  "\\1#{Color.cyan}\\2#{Color.reset}" )
       text.gsub!( /(^|\s)_(.*?[a-zA-Z0-9]+.*?)_/, 
-                  "\\1#{Term::ANSIColor.yellow}\\2#{Term::ANSIColor.reset}" )
+                  "\\1#{Color.yellow}\\2#{Color.reset}" )
 
       text.gsub!( %r{\b((?:https?|ftp)://[-\w.?%&=/]+)\b}, 
-                  "#{Term::ANSIColor.underline}\\1#{Term::ANSIColor.reset}" )
+                  "#{Color.underline}\\1#{Color.reset}" )
 
       text.gsub!( %r{\b(mailto:[-\w.%]+@[-\w.]+)\b}, 
-                  "#{Term::ANSIColor.underline}\\1#{Term::ANSIColor.reset}" )
+                  "#{Color.underline}\\1#{Color.reset}" )
 
       text.gsub!( %r{\b((?<!:\/\/)www.[-\w.?%&=]+)\b}, 
-                  "#{Term::ANSIColor.underline}\\1#{Term::ANSIColor.reset}" )
+                  "#{Color.underline}\\1#{Color.reset}" )
 
       text.gsub!( %r{\blink:(.*?)(\s|$)}, 
-                  "#{Term::ANSIColor.underline}\\1#{Term::ANSIColor.reset}\\2" )
+                  "#{Color.underline}\\1#{Color.reset}\\2" )
 
       text.gsub!( %r{\{(.*?)\}\[(.*?)\]}, "\\1 (\\2)" )
-      text.gsub!( %r{\[(#{Regexp.escape( Term::ANSIColor.underline )}.*?#{Regexp.escape( Term::ANSIColor.reset )})\]}, 
+      text.gsub!( %r{\[(#{Regexp.escape( Color.underline )}.*?#{Regexp.escape( Color.reset )})\]}, 
                   " (\\1)" )
       text
     end
