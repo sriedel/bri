@@ -1,3 +1,3 @@
-require 'bri/match/base'
-require 'bri/match/class'
-require 'bri/match/method'
+require_relative 'match/base'
+require_relative 'match/class'
+require_relative 'match/method'

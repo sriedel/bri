@@ -1,14 +1,12 @@
-$: << File.dirname( __FILE__ )
 require 'erb'
 require 'term/ansicolor'
 
-
-require 'bri/renderer'
-require 'bri/mall'
-require 'bri/matcher'
-require 'bri/templates'
-require 'bri/search'
-require 'bri/match'
+require_relative 'bri/renderer'
+require_relative 'bri/mall'
+require_relative 'bri/matcher'
+require_relative 'bri/templates'
+require_relative 'bri/search'
+require_relative 'bri/match'
 
 module Bri
   DEFAULT_WIDTH = 72
