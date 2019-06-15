@@ -9,12 +9,13 @@ interest and didn't port fastri to ruby 1.9. There are patches porting fastri
 to 1.9.1, but they are iffy and don't work well with 1.9.2 and the new rdoc
 cache format.
 
-Now with ruby 1.9 and the rdoc 2.x/3.x gem ri is very responsive. However the
-output format looks like darkfish without the HTML and uses up a lot of space.
+With ruby 1.9 and rdoc 2.x/3.x ri became very responsive. However the output
+format looks like darkfish without the HTML and uses up a lot of space. 
+
 And subjectively, it's ugly.
 
 This is where bri comes in: it tries to emulate fastri/qris output format and
-lookup patterns while using the new rdoc 2.x/3.x infrastructure.
+lookup patterns while using the more current rdoc infrastructure.
 
 To compare, do 'ri Array' and 'bri Array' and see which appeals more to you.
 
