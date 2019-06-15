@@ -4,6 +4,7 @@
   - Remove comma separators from method lists in order to ease copy and paste
   actions
   - List multiple choices one per line for easier visual searching
+  - More internal cleanups
 
 0.4.1
   - Modernize and refactor code

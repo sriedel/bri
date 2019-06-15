@@ -7,3 +7,5 @@
   highlight these (e.g. Object#send and Object.new)
 - Add display of in_files
 - Add display of module constant aliases
+- Rewrite the search code into something understandable and maintainable
+  (sleep deprivation is one hell of a drug)
