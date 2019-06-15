@@ -49,7 +49,7 @@ describe Bri::Search::Class do
         it "should have matches" do
           subject.search
           subject.matches.should_not be_empty
-          subject.matches.any?{ |match| match.name == "BriDummySpecClass" }.should be(true)
+          subject.matches.any?{ |match| match.name == "BriDummySpecClass < Object" }.should be(true)
         end
       end
       
@@ -62,6 +62,5 @@ describe Bri::Search::Class do
         end
       end
     end
-
   end
 end

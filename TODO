@@ -3,6 +3,7 @@
   a line wrap occurs
 - Refactor the convoluted rendering of lists and list items
 - Detect ansi capabilities and use what is possible with graceful degradation?
-- Indent source examples with 4 spaces
 - Potentially try to detect method references in documentation prose and 
   highlight these (e.g. Object#send and Object.new)
+- Add display of in_files
+- Add display of module constant aliases

@@ -37,11 +37,11 @@ describe Bri::Match::Class do
 
   describe "#name" do
     it "should contain the name of a class" do
-      empty_class.name.should == "BriDummySpecClassEmpty"
+      empty_class.name.should == "BriDummySpecClassEmpty < Object"
     end
 
     it "should contain the fully qualified name of a namespaced class" do
-      namespaced_class.name.should == "BriDummySpec::Class"
+      namespaced_class.name.should == "BriDummySpec::Class < Object"
     end
   end
 

@@ -26,6 +26,12 @@ module Bri
 
 
 <% end %>
+<% if !extends.empty? %>
+<%= section_header( "Extends:" ) %>
+<%= Bri::Renderer.wrap_list( extends.sort ) %>
+
+
+<% end %>
 <% if !constants.empty? %>
 <%= section_header( "Constants:" ) %>
 <%= Bri::Renderer.wrap_list( constants.sort ) %>

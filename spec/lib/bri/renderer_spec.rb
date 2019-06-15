@@ -82,7 +82,7 @@ describe Bri::Renderer do
       subject { render_description_for_method( "list_containing_verbatim_text" ) }
       
       it "should correctly display verbatim text" do
-        subject.should =~ /\n  Containing verbatim text\n/
+        subject.should =~ /\n    Containing verbatim text\n/
       end
     end
 
