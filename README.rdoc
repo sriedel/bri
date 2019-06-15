@@ -30,8 +30,8 @@ Bri is a Beautiful RI formatter.
             # anywhere in the method name
 
 = Requirements
- * Ruby 1.9.2
- * rdoc 3.5.3 and above
+ * Ruby 2.6 or later
+ * rdoc 6.1 or later
  * term-ansicolor
 
 
