@@ -5,7 +5,7 @@ module Bri
     MULTIPLE_CHOICES =<<-EOT
 <%= Bri::Templates::Helpers.hrule( "Multiple choices:" ) %>
 
-<%= Bri::Renderer.wrap_list( qualified_methods.sort ) %>
+<%= qualified_methods.sort.join("\n") %>
 
 
     EOT
