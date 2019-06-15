@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bri (0.3.0)
+    bri (0.4.0)
       rdoc (~> 6.1.1)
       term-ansicolor (>= 1.7.1)
 

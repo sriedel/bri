@@ -9,35 +9,31 @@ module Bri
     attr_reader :stores
 
     def classes
-      @stores.collect { |store| store.module_names }.flatten.uniq.sort
+      stores.flat_map(&:module_names).uniq.sort
     end
 
     def class_methods
-      Bri::Mall.instance.stores.map do |store|
+      stores.flat_map do |store|
         store.class_methods.map do |klass, methods|
           methods.map { |method| "#{klass}.#{method}" }
         end
-      end.flatten.uniq
+      end.uniq
     end
 
     def instance_methods
-      Bri::Mall.instance.stores.map do |store|
+      stores.flat_map do |store|
         store.instance_methods.map do |klass, methods|
           methods.map { |method| "#{klass}##{method}" }
         end
-      end.flatten.uniq
+      end.uniq
     end
 
     private
     def initialize
-      @stores = []
-
       # We want: system, site, home and gem documentation
-      RDoc::RI::Paths.each( true, true, true, true ) do |path, type|
-        @stores << RDoc::Store.new( path, type ).
-                               tap { |store| store.load_cache }
-      end
+      @stores = RDoc::RI::Paths.each( true, true, true, true ).each_with_object( [] ) do |(path, type), stores|
+                  stores << RDoc::Store.new( path, type ).tap { |store| store.load_cache }
+                end
     end
-
   end
 end

@@ -8,11 +8,11 @@ module Bri
 
       def initialize( rdoc_method, store = nil )
         @full_name = rdoc_method.full_name
-        @call_syntaxes = rdoc_method.arglists.split( "\n" ).
-                                              map { |e| "  " + e }.
+        @call_syntaxes = rdoc_method.arglists.lines( chomp: true ).
+                                              map { |e| e.prepend( "  " ) }.
                                               join( "\n" ) + "\n" rescue ''
         @description_paragraphs = build_description( rdoc_method.comment.parts )
-        @origin = store ? store.friendly_path : nil
+        @origin = store&.friendly_path
       end
     end
   end

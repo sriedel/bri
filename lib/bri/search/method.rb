@@ -7,11 +7,11 @@ module Bri
         super
         @class_term, @method_term = term.split( /[\.#]/, 2 )
 
-        if @class_term !~ /^[A-Z]/ && @method_term.nil?
+        if @class_term !~ /^[A-Z]/ && !@method_term
           @method_term, @class_term = @class_term, @method_term
         end
 
-        @class_term = nil if @class_term == ""
+        @class_term = nil if @class_term&.empty?
       end
 
       def search( type = :fully_qualified )
@@ -38,17 +38,18 @@ module Bri
       end
 
       def classes_with_method( store, method )
-        store_methods( store ).select { |klass, methods| methods.include? method }.keys
+        store_methods( store ).select do |_klass, methods|
+                                 methods.include?( method )
+                               end.keys
       end
 
       def candidates_from_method_re( store, method_re )
-        candidates = {}
-        store_methods( store ).each do |klass, methods|
+        store_methods( store ).each_with_object( {} ) do |(klass, methods), candidates|
           matching_methods = methods.grep( method_re )
           next if matching_methods.empty?
+
           candidates[klass] = matching_methods
         end
-        candidates
       end
 
 
@@ -64,9 +65,9 @@ module Bri
       end
 
       def unqualified_search
-        [ /^#{Regexp.escape @method_term}$/,
-          /^#{Regexp.escape @method_term}/,
-          /#{Regexp.escape @method_term}/ ].each do |method_re|
+        [ /^#{Regexp.escape( @method_term )}$/,
+          /^#{Regexp.escape( @method_term )}/,
+          /#{Regexp.escape( @method_term )}/ ].each do |method_re|
           unqualified_search_worker( method_re )
           break unless @matches.empty?
         end
@@ -84,7 +85,6 @@ module Bri
           end
         end
       end
-
     end
   end
 end

@@ -43,21 +43,21 @@ module Bri
     elsif results.size == 1
       results.first.to_s
     else
-      qualified_methods = results.collect{ |result| result.full_name }.sort
       ERB.new( Bri::Templates::MULTIPLE_CHOICES, nil, '<>' ).result( binding )
     end
   end
 
   def self.width
-    return @@width if defined?( @@width )
+    return @width if instance_variable_defined?( :@width )
+
     base_width = ENV['COLUMNS'].to_i 
     base_width = 80 if base_width == 0
 
-    @@width ||= [ base_width - 8, 1 ].max
+    @width ||= [ base_width - 8, 1 ].max
   end
 
   def self.width=( width )
-    @@width = [ width, 1 ].max
+    @width = [ width, 1 ].max
   end
 
   def self.list_classes

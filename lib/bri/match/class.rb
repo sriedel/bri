@@ -17,14 +17,14 @@ module Bri
                                                       partition { |m| m.singleton }
         @type                   = rdoc_result.type
         @name                   = "#{rdoc_result.full_name}"
-        @name                   << " < #{rdoc_result.superclass}" if @type == "class"
+        @name                   << " < #{rdoc_result.superclass}" if @type == "class" && rdoc_result.superclass
         @description_paragraphs = build_description( rdoc_result.comment.parts )
-        @includes               = rdoc_result.includes.collect { |i| i.full_name }
-        @extends                = rdoc_result.extends.collect { |i| i.full_name }
-        @attributes             = rdoc_result.attributes.collect { |a| "#{a.name} (#{a.rw})" }
-        @class_methods          = class_methods.collect { |m| m.name }
-        @instance_methods       = instance_methods.collect { |m| m.name }
-        @origin                 = store ? store.friendly_path : nil
+        @includes               = rdoc_result.includes.map(&:full_name)
+        @extends                = rdoc_result.extends.map(&:full_name)
+        @attributes             = rdoc_result.attributes.map { |a| "#{a.name} (#{a.rw})" }
+        @class_methods          = class_methods.map(&:name)
+        @instance_methods       = instance_methods.map(&:name)
+        @origin                 = store&.friendly_path
         @constants = rdoc_result.constants.map do |c|
                        c.value ? "#{c.name} = #{c.value}" : c.name
                      end

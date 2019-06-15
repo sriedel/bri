@@ -7,12 +7,11 @@ module Bri
     UPPER_ALPHABET = ('A'..'Z').to_a
 
     def self.render( element, width = Bri.width, alignment_width = 0 )
-      # STDERR.puts "Rendering #{element.inspect}"
       case element
         when RDoc::Markup::Verbatim 
           text = extract_text( element, width )
           styled_text = replace_markup( text )
-          indent( styled_text ) + "\n"
+          "#{indent( styled_text )}\n"
 
         when RDoc::Markup::List
           item_width = width - INDENT.length
@@ -20,25 +19,25 @@ module Bri
             when :BULLET 
               rendered_items = element.items.map { |item| render( item, item_width ) }
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
-              rendered_items.map! { |item| ' *' + item }
+              rendered_items.map! { |item| item.prepend( ' *' ) }
 
             when :NUMBER
               i = 0
               rendered_items = element.items.map { |item| render( item, item_width ) }
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
-              rendered_items.map! { |item| i+=1; sprintf "%d.%s", i, item }
+              rendered_items.map! { |item| i+=1; sprintf( "%d.%s", i, item ) }
 
             when :LALPHA
               i = -1
               rendered_items = element.items.map { |item| render( item, item_width ) }
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
-              rendered_items.map! { |item| i+=1; sprintf "%s.%s", LOWER_ALPHABET[i], item }
+              rendered_items.map! { |item| i+=1; sprintf( "%s.%s", LOWER_ALPHABET[i], item ) }
 
             when :UALPHA
               i = -1
               rendered_items = element.items.map { |item| render( item, item_width ) }
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
-              rendered_items.map! { |item| i+=1; sprintf "%s.%s", UPPER_ALPHABET[i], item }
+              rendered_items.map! { |item| i+=1; sprintf( "%s.%s", UPPER_ALPHABET[i], item ) }
               
             when :LABEL
               # do nothing
@@ -51,7 +50,7 @@ module Bri
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
           end
 
-          rendered_items.join( "\n\n" ) + "\n"
+          "#{rendered_items.join( "\n\n" )}\n"
 
         else
           text = extract_text( element, width, alignment_width )
@@ -66,69 +65,78 @@ module Bri
                when RDoc::Markup::Paragraph
                  join_char = conserve_newlines ? "\n" : " "
                  element.parts.map(&:strip).join( join_char )
+
                when RDoc::Markup::BlankLine
                  ""
+
                when RDoc::Markup::Rule
                  "-" * width
+
                when RDoc::Markup::Verbatim
-                 element.parts.map { |part| "  #{part}" }.join
+                 element.parts.map { |part| part.prepend( "  " ) }.join
+
                when RDoc::Markup::Heading
                  "<h>#{element.text}</h>" 
+
                when RDoc::Markup::ListItem
-                 parts = element.parts.collect { |part| extract_text part, width, 0, true }.join
+                 parts = element.parts.map { |part| extract_text( part, width, 0, true ) }.join
+
                  if element.label
                    labels = element.label.map { |l| "#{l}:" }.join("\n")
                    sprintf( "%*s %s", -label_alignment_width, labels, parts )
                  else
                    parts
                  end
+
                when RDoc::Markup::List
                  render( element, width - INDENT.length )
+
                 when RDoc::Markup::Document
-                  extracted_parts = element.parts.map { |part| extract_text( part, width, label_alignment_width, conserve_newlines ) }
-                  extracted_parts.empty? ? '' : extracted_parts.join
+                  element.parts.
+                          map { |part| extract_text( part, width, label_alignment_width, conserve_newlines ) }.
+                          join
                else  
                  raise "Don't know how to handle type #{element.class}: #{element.inspect}"
              end
-      text + "\n"
+      text << "\n"
     end
 
     def self.replace_markup( text )
-      text.gsub!( /(?<!\\)<(?:tt|code)>/, Term::ANSIColor::cyan )
-      text.gsub!( /(?<!\\)<\/(?:tt|code)>/, Term::ANSIColor::reset )
+      text.gsub!( /(?<!\\)<(?:tt|code)>/, Term::ANSIColor.cyan )
+      text.gsub!( /(?<!\\)<\/(?:tt|code)>/, Term::ANSIColor.reset )
 
-      text.gsub!( /(?<!\\)<b>/, Term::ANSIColor::bold )
-      text.gsub!( /(?<!\\)<\/b>/, Term::ANSIColor::reset )
+      text.gsub!( /(?<!\\)<b>/, Term::ANSIColor.bold )
+      text.gsub!( /(?<!\\)<\/b>/, Term::ANSIColor.reset )
 
-      text.gsub!( /(?<!\\)<(?:em|i)>/, Term::ANSIColor::yellow )
-      text.gsub!( /(?<!\\)<\/(?:em|i)>/, Term::ANSIColor::reset )
+      text.gsub!( /(?<!\\)<(?:em|i)>/, Term::ANSIColor.yellow )
+      text.gsub!( /(?<!\\)<\/(?:em|i)>/, Term::ANSIColor.reset )
 
-      text.gsub!( "<h>", Term::ANSIColor::green )
-      text.gsub!( "</h>", Term::ANSIColor::reset )
+      text.gsub!( "<h>", Term::ANSIColor.green )
+      text.gsub!( "</h>", Term::ANSIColor.reset )
 
       text.gsub!( "\\<", "<" )
 
       text.gsub!( /(^|\s)\*(.*?[a-zA-Z0-9]+.*?)\*/, 
-                  "\\1#{Term::ANSIColor::bold}\\2#{Term::ANSIColor::reset}" )
+                  "\\1#{Term::ANSIColor.bold}\\2#{Term::ANSIColor.reset}" )
       text.gsub!( /(^|\s)\+(.*?[a-zA-Z0-9]+.*?)\+/, 
-                  "\\1#{Term::ANSIColor::cyan}\\2#{Term::ANSIColor::reset}" )
+                  "\\1#{Term::ANSIColor.cyan}\\2#{Term::ANSIColor.reset}" )
       text.gsub!( /(^|\s)_(.*?[a-zA-Z0-9]+.*?)_/, 
-                  "\\1#{Term::ANSIColor::yellow}\\2#{Term::ANSIColor::reset}" )
+                  "\\1#{Term::ANSIColor.yellow}\\2#{Term::ANSIColor.reset}" )
 
       text.gsub!( %r{\b((?:https?|ftp)://[-\w.?%&=/]+)\b}, 
-                  "#{Term::ANSIColor::underline}\\1#{Term::ANSIColor::reset}" )
+                  "#{Term::ANSIColor.underline}\\1#{Term::ANSIColor.reset}" )
 
       text.gsub!( %r{\b(mailto:[-\w.%]+@[-\w.]+)\b}, 
-                  "#{Term::ANSIColor::underline}\\1#{Term::ANSIColor::reset}" )
+                  "#{Term::ANSIColor.underline}\\1#{Term::ANSIColor.reset}" )
 
       text.gsub!( %r{\b((?<!:\/\/)www.[-\w.?%&=]+)\b}, 
-                  "#{Term::ANSIColor::underline}\\1#{Term::ANSIColor::reset}" )
+                  "#{Term::ANSIColor.underline}\\1#{Term::ANSIColor.reset}" )
 
       text.gsub!( %r{\blink:(.*?)(\s|$)}, 
-                  "#{Term::ANSIColor::underline}\\1#{Term::ANSIColor::reset}\\2" )
+                  "#{Term::ANSIColor.underline}\\1#{Term::ANSIColor.reset}\\2" )
 
       text.gsub!( %r{\{(.*?)\}\[(.*?)\]}, "\\1 (\\2)" )
-      text.gsub!( %r{\[(#{Regexp.escape( Term::ANSIColor::underline )}.*?#{Regexp.escape( Term::ANSIColor::reset )})\]}, 
+      text.gsub!( %r{\[(#{Regexp.escape( Term::ANSIColor.underline )}.*?#{Regexp.escape( Term::ANSIColor.reset )})\]}, 
                   " (\\1)" )
       text
     end
@@ -142,7 +150,7 @@ module Bri
     end
 
     def self.wrap_to_width( styled_text, width )
-      styled_text.split( "\n" ).collect { |row| wrap_row row, width }.join
+      styled_text.split( "\n" ).map { |row| wrap_row( row, width ) }.join
     end
 
     def self.wrap_row( physical_row, width )
@@ -161,6 +169,7 @@ module Bri
           logical_row = ''
           printable_row_length = 0
         end
+
         logical_row << token
         printable_row_length += printable_token_length
 
@@ -168,11 +177,12 @@ module Bri
         logical_row << token
         printable_row_length += token.length
       end
+
       output_text << logical_row << "\n"
     end
 
     def self.indent( text )
-      text.split( "\n" ).collect { |row| "#{INDENT}#{row}" }.join("\n" )
+      text.split( "\n" ).map { |row| "#{INDENT}#{row}" }.join("\n" )
     end
   end
 end

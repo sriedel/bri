@@ -8,6 +8,7 @@ module Bri
 
       def method_rdoc( store, klass = @class_term, method = @method_term )
         store.load_method( klass, method )
+
       rescue Errno::ENOENT
         nil
       end
