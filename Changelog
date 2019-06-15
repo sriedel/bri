@@ -1,3 +1,8 @@
+0.4.1
+  - Modernize and refactor code
+  - Show extends of classes in rendered documentation
+  - Show superclass of classes in rendered documentation
+
 0.4.0
   - Update gems to their current versions
   - Require ruby 2.6 or later
