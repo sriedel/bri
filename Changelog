@@ -5,6 +5,7 @@
   actions
   - List multiple choices one per line for easier visual searching
   - More internal cleanups
+  - Add caveat to the readme
 
 0.4.1
   - Modernize and refactor code
