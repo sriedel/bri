@@ -114,6 +114,9 @@ module Bri
 
       text.gsub!( "\\<", "<" )
 
+      text.gsub!( /(#\s*=>)(.*)/,
+                  "#{Term::ANSIColor.dark}\\1#{Term::ANSIColor.reset}#{Term::ANSIColor.bold}\\2#{Term::ANSIColor.reset}" )
+
       text.gsub!( /(^|\s)\*(.*?[a-zA-Z0-9]+.*?)\*/, 
                   "\\1#{Term::ANSIColor.bold}\\2#{Term::ANSIColor.reset}" )
       text.gsub!( /(^|\s)\+(.*?[a-zA-Z0-9]+.*?)\+/, 
