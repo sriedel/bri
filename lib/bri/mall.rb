@@ -13,17 +13,17 @@ module Bri
     end
 
     def class_methods
-      stores.flat_map do |store|
-        store.class_methods.map do |klass, methods|
-          methods.map { |method| "#{klass}.#{method}" }
+      stores.each_with_object( [] ) do |store, result|
+        store.class_methods.each do |klass, methods|
+          methods.each { |method| result << "#{klass}.#{method}" }
         end
       end.uniq
     end
 
     def instance_methods
-      stores.flat_map do |store|
-        store.instance_methods.map do |klass, methods|
-          methods.map { |method| "#{klass}##{method}" }
+      stores.each_with_object( [] ) do |store, result|
+        store.instance_methods.each do |klass, methods|
+          methods.each { |method| result << "#{klass}##{method}" }
         end
       end.uniq
     end
