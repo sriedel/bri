@@ -1,4 +1,5 @@
 require 'rspec/its'
+require 'byebug'
 require_relative '../lib/bri'
 
 RSpec.configure do |config|
@@ -17,6 +18,5 @@ end
 RSpec::Expectations.configuration.on_potential_false_positives = :nothing
 
 puts "Regenerating ri document cache"
-output_path = File.join( __dir__, 'ri' )
 class_file = File.join( __dir__, 'bri_dummy_spec_class.rb' )
 %x{rdoc --ri #{class_file}}
