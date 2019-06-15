@@ -1,3 +1,4 @@
 .*.sw[po]
 *.gem
+.byebug_history
 tags
