@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.executables = [ 'bri' ]
 
   s.extra_rdoc_files = %W{ README }
-  s.files = %W{ README
+  s.files = %W{ README.rdoc
                 TODO
                 Changelog
                 bin/bri
