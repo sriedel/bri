@@ -3,8 +3,9 @@ require 'strscan'
 module Bri
   module Renderer
     INDENT = ' ' * 2
-    LOWER_ALPHABET = ('a'..'z').to_a
-    UPPER_ALPHABET = ('A'..'Z').to_a
+    INDENT_WIDTH = 2
+    LOWER_ALPHABET = ('a'..'z').to_a.map { |char| "#{char}." }.freeze
+    UPPER_ALPHABET = ('A'..'Z').to_a.map { |char| "#{char}." }.freeze
 
     def self.render( element, width = Bri.width, alignment_width = 0 )
       case element
@@ -14,7 +15,7 @@ module Bri
           "#{indent( styled_text )}\n"
 
         when RDoc::Markup::List
-          item_width = width - INDENT.length
+          item_width = width - INDENT_WIDTH
           case element.type
             when :BULLET 
               rendered_items = element.items.map { |item| render( item, item_width ) }
@@ -22,22 +23,19 @@ module Bri
               rendered_items.map! { |item| item.prepend( ' *' ) }
 
             when :NUMBER
-              i = 0
               rendered_items = element.items.map { |item| render( item, item_width ) }
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
-              rendered_items.map! { |item| i+=1; sprintf( "%d.%s", i, item ) }
+              rendered_items.map!.with_index( 1 ) { |item, i| item.prepend( "#{i}." ) }
 
             when :LALPHA
-              i = -1
               rendered_items = element.items.map { |item| render( item, item_width ) }
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
-              rendered_items.map! { |item| i+=1; sprintf( "%s.%s", LOWER_ALPHABET[i], item ) }
+              rendered_items.map!.with_index { |item, i| item.prepend( LOWER_ALPHABET[i] ) }
 
             when :UALPHA
-              i = -1
               rendered_items = element.items.map { |item| render( item, item_width ) }
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
-              rendered_items.map! { |item| i+=1; sprintf( "%s.%s", UPPER_ALPHABET[i], item ) }
+              rendered_items.map!.with_index { |item, index| item.prepend( UPPER_ALPHABET[i] ) }
               
             when :LABEL
               # do nothing
@@ -89,7 +87,7 @@ module Bri
                  end
 
                when RDoc::Markup::List
-                 render( element, width - INDENT.length )
+                 render( element, width - INDENT_WIDTH )
 
                 when RDoc::Markup::Document
                   element.parts.
