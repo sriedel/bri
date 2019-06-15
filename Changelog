@@ -1,3 +1,9 @@
+0.4.3
+  - If multiple documentations are found that are all class documentations,
+    display all of these. This is useful in cases that gems extend core 
+    classes e.g. ActiveSupport.
+  - Reduce the amount of vertical whitespace caused by rendering empty rdoc nodes
+
 0.4.2
   - Fix broken --list-names option
   - Fix broken multiple choice display
