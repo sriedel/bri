@@ -13,16 +13,16 @@ describe Bri::Search::Class do
   describe "#search" do
     context "basic functionality" do
       before( :each ) do
-        store_one = mock( RDoc::RI::Store, :load_cache    => true,
-                                           :load_class    => true,
-                                           :friendly_path => "ruby core",
-                                           :modules       => %w{ ClassThree } )
-        store_two = mock( RDoc::RI::Store, :load_cache    => true,
-                                           :load_class    => true,
-                                           :friendly_path => "ruby core",
-                                           :modules       => %w{ ClassOne ClassTwo } )
-        Bri::Mall.instance.stub!( :stores => [ store_one, store_two ] )
-        Bri::Match::Class.stub!( :new ).and_return( mock( Bri::Match::Class ) )
+        store_one = double( RDoc::Store, :load_cache    => true,
+                                         :load_class    => true,
+                                         :friendly_path => "ruby core",
+                                         :module_names  => %w{ ClassThree } )
+        store_two = double( RDoc::Store, :load_cache    => true,
+                                         :load_class    => true,
+                                         :friendly_path => "ruby core",
+                                         :module_names  => %w{ ClassOne ClassTwo } )
+        allow(Bri::Mall.instance).to receive( :stores ).and_return( [ store_one, store_two ] )
+        allow(Bri::Match::Class).to receive( :new ).and_return( double( Bri::Match::Class ) )
       end
 
       context "if there are no matching modules in any store" do
@@ -49,7 +49,7 @@ describe Bri::Search::Class do
         it "should have matches" do
           subject.search
           subject.matches.should_not be_empty
-          subject.matches.any?{ |match| match.name == "BriDummySpecClass" }.should be_true
+          subject.matches.any?{ |match| match.name == "BriDummySpecClass" }.should be(true)
         end
       end
       
@@ -58,7 +58,7 @@ describe Bri::Search::Class do
 
         it "should not have any matches" do
           subject.search
-          subject.matches.any? { |match| match.name == "IAmQuiteCertainIDontExist" }.should be_false
+          subject.matches.any? { |match| match.name == "IAmQuiteCertainIDontExist" }.should be(false)
         end
       end
     end

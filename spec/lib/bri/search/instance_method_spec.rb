@@ -3,26 +3,26 @@ require 'spec_helper'
 describe Bri::Search::InstanceMethod do
   context "the searches" do
     let( :paragraph ) { RDoc::Markup::Paragraph.new( "Foo Description" ) }
-    let( :document ) { mock( RDoc::Markup::Document, :parts => [ paragraph ] ) }
-    let( :rdoc_method ) { mock( RDoc::AnyMethod, :full_name => "Foo",
+    let( :document ) { double( RDoc::Markup::Document, :parts => [ paragraph ] ) }
+    let( :rdoc_method ) { double( RDoc::AnyMethod, :full_name => "Foo",
                                                  :arglists => "",
                                                  :comment => document ) }
     before( :each ) do
-      store_one = mock( RDoc::RI::Store, :load_cache       => true,
+      store_one = double( RDoc::RI::Store, :load_cache       => true,
                                          :load_class       => true,
                                          :load_method      => rdoc_method,
                                          :friendly_path    => "ruby core",
                                          :modules          => %w{ ClassThree },
                                          :instance_methods => { "ClassThree" => [ "method" ] } )
-      store_two = mock( RDoc::RI::Store, :load_cache       => true,
+      store_two = double( RDoc::RI::Store, :load_cache       => true,
                                          :load_class       => true,
                                          :load_method      => rdoc_method,
                                          :friendly_path    => "ruby core",
                                          :modules          => %w{ ClassOne ClassTwo },
                                          :instance_methods => { "ClassOne" => [ "method" ],
                                                              "ClassTwo" => [ "method", "my_other_method" ] } )
-      Bri::Mall.instance.stub!( :stores => [ store_one, store_two ] )
-      Bri::Match::Class.stub!( :new ).and_return( mock( Bri::Match::Class ) )
+      allow(Bri::Mall.instance).to receive(:stores).and_return( [ store_one, store_two ] )
+      allow(Bri::Match::Class).to receive( :new ).and_return( double( Bri::Match::Class ) )
     end
 
     describe "a fully qualified search" do 
@@ -124,7 +124,7 @@ describe Bri::Search::InstanceMethod do
           search_instance = Bri::Search::InstanceMethod.new( "#bri_dummy_spec_instance_method" )
           search_instance.search( :partially_qualified )
           search_instance.matches.should_not be_empty
-          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass#bri_dummy_spec_instance_method" }.should be_true
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass#bri_dummy_spec_instance_method" }.should be(true)
         end
       end
 
@@ -133,8 +133,8 @@ describe Bri::Search::InstanceMethod do
           search_instance = Bri::Search::InstanceMethod.new( "#bri_dummy_spec_instance_method_with_arguments" )
           search_instance.search( :partially_qualified )
           search_instance.matches.should_not be_empty
-          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass#bri_dummy_spec_instance_method_with_arguments" }.should be_true
-          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClassTwo#bri_dummy_spec_instance_method_with_arguments" }.should be_true
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass#bri_dummy_spec_instance_method_with_arguments" }.should be(true)
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClassTwo#bri_dummy_spec_instance_method_with_arguments" }.should be(true)
         end
       end
     end
@@ -153,7 +153,7 @@ describe Bri::Search::InstanceMethod do
           search_instance = Bri::Search::InstanceMethod.new( "bri_dummy_spec_instance_method" )
           search_instance.search( :unqualified )
           search_instance.matches.should_not be_empty
-          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass#bri_dummy_spec_instance_method" }.should be_true
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass#bri_dummy_spec_instance_method" }.should be(true)
         end
       end
 
@@ -162,10 +162,10 @@ describe Bri::Search::InstanceMethod do
           search_instance = Bri::Search::InstanceMethod.new( "bri_dummy_spec" )
           search_instance.search( :unqualified )
           search_instance.matches.should_not be_empty
-          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass#bri_dummy_spec_instance_method" }.should be_true
-          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass#bri_dummy_spec_instance_method_with_arguments" }.should be_true
-          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClassTwo#bri_dummy_spec_instance_method_with_arguments" }.should be_true
-          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass#bri_dummy_spec_instance_method_with_default_arguments" }.should be_true
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass#bri_dummy_spec_instance_method" }.should be(true)
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass#bri_dummy_spec_instance_method_with_arguments" }.should be(true)
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClassTwo#bri_dummy_spec_instance_method_with_arguments" }.should be(true)
+          search_instance.matches.any? { |match| match.full_name == "BriDummySpecClass#bri_dummy_spec_instance_method_with_default_arguments" }.should be(true)
         end
       end
     end

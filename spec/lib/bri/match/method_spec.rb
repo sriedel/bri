@@ -6,11 +6,11 @@ describe Bri::Match::Method do
   end
 
   let( :fake_description ) do
-    mock( RDoc::Markup::Document, :parts => [ fake_paragraph ] )
+    double( RDoc::Markup::Document, :parts => [ fake_paragraph ] )
   end
 
   let( :rdoc_method ) do
-    mock( RDoc::AnyMethod, :full_name => "This::IS::My.full_name",
+    double( RDoc::AnyMethod, :full_name => "This::IS::My.full_name",
                            :arglists => "First\nSecond\nThird",
                            :comment => fake_description )
   end
