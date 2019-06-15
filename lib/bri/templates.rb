@@ -1,5 +1,7 @@
 module Bri
   module Templates
+    RULE_CHARACTER = '-'.freeze
+
     MULTIPLE_CHOICES =<<-EOT
 <%= Bri::Templates::Helpers.hrule( "Multiple choices:" ) %>
 
@@ -74,12 +76,13 @@ module Bri
 
     module Helpers
       def hrule( text = '', width = Bri.width )
-        if text == ''
-          '-' * width + "\n"
-        else
-          text = " " + text if text != ''
-          ( '-' * [ ( width - text.length ), 1 ].max ) + Term::ANSIColor::bold( text ) + "\n"
-        end
+        text.prepend( " " ) unless text.empty?
+
+        rule_length = width - text.length
+        rule_length = 1 if rule_length < 1
+
+        rule = RULE_CHARACTER * rule_length
+        "#{rule}#{Term::ANSIColor::bold( text )}\n"
       end
       module_function :hrule
 
@@ -89,7 +92,7 @@ module Bri
       end
 
       def section_header( text )
-        Term::ANSIColor::green + Term::ANSIColor::underline + text + Term::ANSIColor::reset + "\n"
+        "#{Term::ANSIColor.green}#{Term::ANSIColor.underline}#{text}#{Term::ANSIColor.reset}\n"
       end
       module_function :section_header
     end
