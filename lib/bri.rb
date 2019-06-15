@@ -18,6 +18,8 @@ module Bri
       "No matching results found"
     elsif results.size == 1
       results.first.to_s
+    elsif results.all? { |r| r.is_a?(Bri::Match::Class) }
+      results.map(&:to_s)
     else
       qualified_methods = results.map(&:full_name).sort
       ERB.new( Bri::Templates::MULTIPLE_CHOICES, nil, '<>' ).result( binding )

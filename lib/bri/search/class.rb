@@ -3,9 +3,9 @@ module Bri
     class Class < Base
       def search( type = :fully_qualified )
         # NOTE: classes are only searched as fully qualified for the time being
-        # FIXME: What do we do if more than one store defines the same class?
-        store = Bri::Mall.instance.stores.detect { |s| s.module_names.include?( @term ) }
-        @matches << Bri::Match::Class.new( store.load_class( @term ), store ) if store
+        Bri::Mall.instance.stores.select { |s| s.module_names.include?( @term ) }.each do |store|
+          @matches << Bri::Match::Class.new( store.load_class( @term ), store )
+        end
       end
     end
   end
