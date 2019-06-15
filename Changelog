@@ -1,3 +1,10 @@
+0.4.2
+  - Fix broken --list-names option
+  - Fix broken multiple choice display
+  - Remove comma separators from method lists in order to ease copy and paste
+  actions
+  - List multiple choices one per line for easier visual searching
+
 0.4.1
   - Modernize and refactor code
   - Show extends of classes in rendered documentation
