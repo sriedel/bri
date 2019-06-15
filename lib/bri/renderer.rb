@@ -144,7 +144,7 @@ module Bri
     end
 
     def self.wrap_list( array, width = Bri.width )
-      indent( wrap_to_width( array.join(", "), width ) )
+      indent( wrap_to_width( array.join(" "), width ) )
     end
 
     def self.wrap_to_width( styled_text, width )
