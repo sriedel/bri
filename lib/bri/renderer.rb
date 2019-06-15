@@ -65,7 +65,7 @@ module Bri
       text = case element
                when RDoc::Markup::Paragraph
                  join_char = conserve_newlines ? "\n" : " "
-                 element.parts.join( join_char )
+                 element.parts.map(&:strip).join( join_char )
                when RDoc::Markup::BlankLine
                  ""
                when RDoc::Markup::Rule
@@ -86,7 +86,7 @@ module Bri
                  render( element, width - INDENT.length )
                 when RDoc::Markup::Document
                   extracted_parts = element.parts.map { |part| extract_text( part, width, label_alignment_width, conserve_newlines ) }
-                  extracted_parts.empty? ? '' : extracted_parts.join("\n")
+                  extracted_parts.empty? ? '' : extracted_parts.join
                else  
                  raise "Don't know how to handle type #{element.class}: #{element.inspect}"
              end

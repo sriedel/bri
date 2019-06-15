@@ -28,7 +28,6 @@ module Bri
         @instance_methods = instance_methods.collect { |m| m.name }
         @origin = store ? store.friendly_path : nil
       end
-
     end
   end
 end
