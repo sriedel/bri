@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency( 'rspec', '~> 3.8.0' )
   s.add_development_dependency( 'rspec-its' )
+  s.add_development_dependency( 'byebug' )
 
   s.summary = %q{Beautified RI in the spirit of fastri/qri. Unlike fastri, bri builds on top of the rdoc 2.x/3.x backend, only output and formatting is handled by bri}
   s.email = %q{sr@gimp.org}
