@@ -24,7 +24,14 @@ Bri is a Beautiful RI formatter.
 
 = Usage
 
- bri Array # looks up the class description of Array in the ri documentation
+ bri Array # looks up the class description of Array in the ri documentation.
+           # As of 0.4.4 this form will only output core documentation if
+           # available, falling back to gem documentation if no core
+           # documentation is found. This way you can look at the documentation
+           # of core classes that gems love to money patch without having
+           # to scroll back through your terminal.
+           # If you really want to see everything there is, use --all:
+ bri --all Array
 
  bri Array.class_method # looks up the class method of the given class
 

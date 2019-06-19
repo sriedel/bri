@@ -1,3 +1,9 @@
+0.4.4
+  - No longer display all found class/module documentation found. If core
+  documentation is available, output only that, otherwise falls back to gem
+  documentation. To show all found documentation use the --all command line
+  paramter.
+
 0.4.3
   - If multiple documentations are found that are all class documentations,
     display all of these. This is useful in cases that gems extend core 

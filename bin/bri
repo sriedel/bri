@@ -5,7 +5,8 @@ require 'optparse'
 @options = {
   :list_classes => false,
   :list_methods => false,
-  :list_names   => false
+  :list_names   => false,
+  :show_all     => false
 }
 
 def parse_options 
@@ -23,6 +24,7 @@ def parse_options
     opts.on( nil, "--methods", "List known methods" ) { |v| @options[:list_methods] = true }
     opts.on( "-l", "--list-names", "List known namespaces/methods" ) { |v| @options[:list_names] = true }
     opts.on( "-w", "--width [COLUMNS]", "Set the output width", Integer ) { |v| Bri.width = v.to_i - 8 }
+    opts.on( "-a", "--all", "Output all documentation for the term. Prefers core documents otherwise") { |v| @options[:show_all] = true }
     opts.on_tail( "-h", "--help", "This help text" ) { puts opts; exit }
   end
   parser.parse!( ARGV )
@@ -43,5 +45,5 @@ elsif @options[:list_methods]
 elsif @options[:list_names]
   puts Bri.list_names
 else
-  puts Bri.ri( ARGV[0] )
+  puts Bri.ri( ARGV[0], show_all: @options[:show_all] )
 end
