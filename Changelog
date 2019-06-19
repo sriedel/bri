@@ -3,6 +3,10 @@
   documentation is available, output only that, otherwise falls back to gem
   documentation. To show all found documentation use the --all command line
   paramter.
+  - Remove blank lines between list items. While these make lists with
+  multi row items more readable, they waste a lot of space for lists 
+  containing only single row items. The blank line will be reintroduced for
+  lists containing multi row elements later on.
 
 0.4.3
   - If multiple documentations are found that are all class documentations,

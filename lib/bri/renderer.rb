@@ -50,7 +50,7 @@ module Bri
               rendered_items.map! { |item| item.gsub( /\n/, "\n#{INDENT}" ) }
           end
 
-          "#{rendered_items.join( "\n\n" )}\n"
+          "#{rendered_items.join( "\n" )}\n"
 
         else
           text = extract_text( element, width, alignment_width )
@@ -66,44 +66,43 @@ module Bri
     end
 
     def self.extract_text( element, width, label_alignment_width = 0, conserve_newlines = false )
-      text = case element
-               when RDoc::Markup::Paragraph
-                 join_char = conserve_newlines ? "\n" : " "
-                 element.parts.map(&:strip).join( join_char )
+      case element
+        when RDoc::Markup::Paragraph
+          join_char = conserve_newlines ? "\n" : " "
+          element.parts.map(&:strip).join( join_char ) + "\n"
 
-               when RDoc::Markup::BlankLine
-                 ""
+        when RDoc::Markup::BlankLine
+          "\n"
 
-               when RDoc::Markup::Rule
-                 "-" * width
+        when RDoc::Markup::Rule
+          "-" * width + "\n"
 
-               when RDoc::Markup::Verbatim
-                 element.parts.map { |part| part.prepend( "  " ) }.join
+        when RDoc::Markup::Verbatim
+          element.parts.map { |part| part.prepend( "  " ) }.join + "\n"
 
-               when RDoc::Markup::Heading
-                 "<h>#{element.text}</h>" 
+        when RDoc::Markup::Heading
+          "<h>#{element.text}</h>\n" 
 
-               when RDoc::Markup::ListItem
-                 parts = element.parts.map { |part| extract_text( part, width, 0, true ) }.join
+        when RDoc::Markup::ListItem
+          parts = element.parts.map { |part| extract_text( part, width, 0, true ) }.join
 
-                 if element.label
-                   labels = element.label.map { |l| "#{l}:" }.join("\n")
-                   sprintf( "%*s %s", -label_alignment_width, labels, parts )
-                 else
-                   parts
-                 end
+          if element.label
+            labels = element.label.map { |l| "#{l}:" }.join("\n")
+            sprintf( "%*s %s", -label_alignment_width, labels, parts )
+          else
+            parts
+          end
 
-               when RDoc::Markup::List
-                 render( element, width - INDENT_WIDTH )
+        when RDoc::Markup::List
+          render( element, width - INDENT_WIDTH ) + "\n"
 
-                when RDoc::Markup::Document
-                  element.parts.
-                          map { |part| extract_text( part, width, label_alignment_width, conserve_newlines ) }.
-                          join
-               else  
-                 raise "Don't know how to handle type #{element.class}: #{element.inspect}"
-             end
-      text << "\n"
+         when RDoc::Markup::Document
+           element.parts.
+                   map { |part| extract_text( part, width, label_alignment_width, conserve_newlines ) }.
+                   join + "\n"
+        else  
+          raise "Don't know how to handle type #{element.class}: #{element.inspect}"
+      end
     end
 
     def self.replace_markup( text )
