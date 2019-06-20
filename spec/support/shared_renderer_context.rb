@@ -1,9 +1,9 @@
 shared_context 'common context for render specs', type: :renderer do
-  let( :green )     { Regexp.escape( Term::ANSIColor::green ) }
-  let( :yellow )    { Regexp.escape( Term::ANSIColor::yellow ) }
-  let( :cyan )      { Regexp.escape( Term::ANSIColor::cyan ) }
-  let( :bold )      { Regexp.escape( Term::ANSIColor::bold ) }
-  let( :italic )    { Regexp.escape( Term::ANSIColor::italic ) }
-  let( :underline ) { Regexp.escape( Term::ANSIColor::underline ) }
-  let( :reset )     { Regexp.escape( Term::ANSIColor::reset ) }
+  let( :green )     { Term::ANSIColor.green }
+  let( :yellow )    { Term::ANSIColor.yellow }
+  let( :cyan )      { Term::ANSIColor.cyan }
+  let( :bold )      { Term::ANSIColor.bold }
+  let( :italic )    { Term::ANSIColor.italic }
+  let( :underline ) { Term::ANSIColor.underline }
+  let( :reset )     { Term::ANSIColor.reset }
 end

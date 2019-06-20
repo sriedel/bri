@@ -5,7 +5,7 @@ describe Bri::Renderer::Heading, type: :renderer  do
     subject { render_description_for_method( "basic_headline_and_paragraph" ) }
 
     it "should be marked in green" do
-      subject.should =~ %r{#{green}This is a headline#{reset}\n}
+      subject.should include("#{green}This is a headline#{reset}\n")
     end
   end
 
@@ -13,7 +13,7 @@ describe Bri::Renderer::Heading, type: :renderer  do
     subject { render_description_for_method( "level_two_headline_and_line_wrapping" ) }
 
     it "should be marked in green" do
-      subject.should =~ %r{#{green}This is a level two headline#{reset}\n}
+      subject.should include("#{green}This is a level two headline#{reset}\n")
     end
   end
 end
