@@ -5,6 +5,6 @@ describe Bri::Renderer::Rule, type: :renderer do
 
   it "should be rendered as an indented row of dashes" do
     rule = "-" * Bri.width
-    subject.should =~ /\n  #{rule}\n/
+    subject.should =~ %r{\n  #{rule}\n}
   end
 end
