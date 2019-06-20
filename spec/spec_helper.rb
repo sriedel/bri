@@ -1,5 +1,7 @@
 require 'rspec/its'
 require 'byebug'
+
+Dir[ File.join(__dir__, 'support', '**', '*.rb' ) ].each { |file| require file }
 require_relative '../lib/bri'
 
 RSpec.configure do |config|
@@ -10,6 +12,8 @@ RSpec.configure do |config|
   config.expect_with :rspec do |expect|
     expect.syntax = [ :should, :expect ]
   end
+
+  config.include RenderHelpers, type: :renderer
 
   config.order = :random
   Kernel.srand config.seed
