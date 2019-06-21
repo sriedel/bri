@@ -11,6 +11,7 @@ require_relative 'renderer/list'
 require_relative 'renderer/paragraph'
 require_relative 'renderer/rule'
 require_relative 'renderer/verbatim'
+require_relative 'renderer/result'
 
 module Bri
   module Renderer
@@ -31,12 +32,12 @@ module Bri
 
     def self.render( element, width = Bri.width, alignment_width = 0 )
       renderer_class = RDOC_TO_BRI_RENDERER_CLASS_MAP[element.class]
-      renderer_class.render( element, width, alignment_width )
+      renderer_class.new( element ).render( width, alignment_width )
     end
 
     def self.extract_text( element, width, label_alignment_width = 0, conserve_newlines = false )
       renderer_class = RDOC_TO_BRI_RENDERER_CLASS_MAP[element.class]
-      renderer_class.extract_text( element, width, label_alignment_width, conserve_newlines )
+      renderer_class.new( element ).extract_text( width, label_alignment_width, conserve_newlines  )
     end
   end
 end

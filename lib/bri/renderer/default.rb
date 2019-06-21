@@ -1,21 +1,23 @@
 module Bri
   module Renderer
     class Default
-      Color = ::Term::ANSIColor
+      attr_reader :element
 
-      def self.render( element, width = Bri.width, alignment_width = 0 )
-        text = ::Bri::Renderer.extract_text( element, width, alignment_width )
+      def initialize( element )
+        @element = element
+      end
 
-        if text == "\n"
+      def render( width = Bri.width, alignment_width = 0 )
+        text = extract_text( width, alignment_width )
+
+        if text.empty?
           nil
         else
-          styled_text = replace_markup( text )
-          wrapped_text = wrap_to_width( styled_text, width )
-          indent( wrapped_text )
+          ::Bri::Renderer::Result.new( text, width )
         end
       end
 
-      def self.extract_text
+      def extract_text( width, label_alignment_width = 0, conserve_newslines = false )
         raise "Don't know how to handle type #{element.class}: #{element.inspect}"
       end
 
@@ -59,48 +61,6 @@ module Bri
         Term::ANSIColor.uncolored( text ).length
       end
 
-      def self.replace_markup( text )
-        text.gsub!( /(?<!\\)<(?:tt|code)>/, Color.cyan )
-        text.gsub!( /(?<!\\)<\/(?:tt|code)>/, Color.reset )
-
-        text.gsub!( /(?<!\\)<b>/, Color.bold )
-        text.gsub!( /(?<!\\)<\/b>/, Color.reset )
-
-        text.gsub!( /(?<!\\)<(?:em|i)>/, Color.yellow )
-        text.gsub!( /(?<!\\)<\/(?:em|i)>/, Color.reset )
-
-        text.gsub!( "<h>", Color.green )
-        text.gsub!( "</h>", Color.reset )
-
-        text.gsub!( "\\<", "<" )
-
-        text.gsub!( /(#\s*=>)(.*)/,
-                    "#{Color.dark}\\1#{Color.reset}#{Color.bold}\\2#{Color.reset}" )
-
-        text.gsub!( /(^|\s)\*(.*?[a-zA-Z0-9]+.*?)\*/, 
-                    "\\1#{Color.bold}\\2#{Color.reset}" )
-        text.gsub!( /(^|\s)\+(.*?[a-zA-Z0-9]+.*?)\+/, 
-                    "\\1#{Color.cyan}\\2#{Color.reset}" )
-        text.gsub!( /(^|\s)_(.*?[a-zA-Z0-9]+.*?)_/, 
-                    "\\1#{Color.yellow}\\2#{Color.reset}" )
-
-        text.gsub!( %r{\b((?:https?|ftp)://[-\w.?%&=/]+)\b}, 
-                    "#{Color.underline}\\1#{Color.reset}" )
-
-        text.gsub!( %r{\b(mailto:[-\w.%]+@[-\w.]+)\b}, 
-                    "#{Color.underline}\\1#{Color.reset}" )
-
-        text.gsub!( %r{\b((?<!:\/\/)www.[-\w.?%&=]+)\b}, 
-                    "#{Color.underline}\\1#{Color.reset}" )
-
-        text.gsub!( %r{\blink:(.*?)(\s|$)}, 
-                    "#{Color.underline}\\1#{Color.reset}\\2" )
-
-        text.gsub!( %r{\{(.*?)\}\[(.*?)\]}, "\\1 (\\2)" )
-        text.gsub!( %r{\[(#{Regexp.escape( Color.underline )}.*?#{Regexp.escape( Color.reset )})\]}, 
-                    " (\\1)" )
-        text
-      end
 
       def self.wrap_list( array, width = Bri.width )
         indent( wrap_to_width( array.join("  "), width ) )

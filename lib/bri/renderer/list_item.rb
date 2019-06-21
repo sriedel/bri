@@ -1,7 +1,7 @@
 module Bri
   module Renderer
     class ListItem < Default
-      def self.extract_text( element, width, label_alignment_width = 0, conserve_newlines = false )
+      def extract_text( width, label_alignment_width = 0, conserve_newlines = false )
         parts = element.parts.map { |part| ::Bri::Renderer.extract_text( part, width, 0, true ) }.join
 
         if element.label
