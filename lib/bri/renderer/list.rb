@@ -6,37 +6,60 @@ module Bri
 
       def render( width = Bri.width, alignment_width = 0 )
         item_width = width - ::Bri::Renderer::INDENT_WIDTH
-        case element.type
-          when :BULLET 
-            rendered_items = element.items.map { |item| ::Bri::Renderer.render( item, item_width ) }
-            rendered_items.each { |item| item.gsub( /\n/, "\n#{::Bri::Renderer::INDENT}" ) }
-            rendered_items.each { |item| item.prepend( '* ' ) }
+        rendered_items = case element.type
+                           when :BULLET 
+                             element.items.
+                                     map do |item| 
+                                       result = ::Bri::Renderer.render( item, item_width )
+                                       result.gsub( /\n/, "\n#{::Bri::Renderer::INDENT}" )
+                                       result.prepend( '* ' )
+                                       result
+                                     end
+                           when :NUMBER
+                             element.items.
+                                     map do |item| 
+                                       result = ::Bri::Renderer.render( item, item_width )
+                                       result.gsub( /\n/, "\n#{::Bri::Renderer::INDENT}" )
+                                       result.prepend( "#{i + 1}. " )
+                                       result
+                                     end
 
-          when :NUMBER
-            rendered_items = element.items.map { |item| ::Bri::Renderer.render( item, item_width ) }
-            rendered_items.each { |item| item.gsub( /\n/, "\n#{::Bri::Renderer::INDENT}" ) }
-            rendered_items.each_with_index { |item, i| item.prepend( "#{i + 1}. " ) }
+                           when :LALPHA
+                             element.items.
+                                     map do |item| 
+                                       result = ::Bri::Renderer.render( item, item_width )
+                                       result.gsub( /\n/, "\n#{::Bri::Renderer::INDENT}" )
+                                       result.prepend( "#{LOWER_ALPHABET[i]} " )
+                                       result
+                                     end
 
-          when :LALPHA
-            rendered_items = element.items.map { |item| ::Bri::Renderer.render( item, item_width ) }
-            rendered_items.each { |item| item.gsub( /\n/, "\n#{::Bri::Renderer::INDENT}" ) }
-            rendered_items.each_with_index { |item, i| item.prepend( LOWER_ALPHABET[i]  + " ") }
+                           when :UALPHA
+                             element.items.
+                                     map do |item| 
+                                       result = ::Bri::Renderer.render( item, item_width )
+                                       result.gsub( /\n/, "\n#{::Bri::Renderer::INDENT}" )
+                                       result.prepend( "#{UPPER_ALPHABET[i]} " )
+                                       result
+                                     end
+                             
+                           when :LABEL
+                             # do nothing
+                             element.items.
+                                     map do |item| 
+                                       result = ::Bri::Renderer.render( item, item_width )
+                                       result.gsub( /\n/, "\n#{::Bri::Renderer::INDENT}" )
+                                       result
+                                     end
 
-          when :UALPHA
-            rendered_items = element.items.map { |item| ::Bri::Renderer.render( item, item_width ) }
-            rendered_items.each { |item| item.gsub( /\n/, "\n#{::Bri::Renderer::INDENT}" ) }
-            rendered_items.each_with_index { |item, index| item.prepend( UPPER_ALPHABET[i]  + " ") }
-            
-          when :LABEL
-            # do nothing
-            rendered_items = element.items.map { |item| ::Bri::Renderer.render( item, item_width ) }
-            rendered_items.each { |item| item.gsub( /\n/, "\n#{::Bri::Renderer::INDENT}" ) }
-
-          when :NOTE
-            alignment_width = element.items.flat_map(&:label).map(&:size).max + 1
-            rendered_items = element.items.map { |item| ::Bri::Renderer.render( item, item_width, alignment_width ) }
-            rendered_items.each { |item| item.gsub( /\n/, "\n#{::Bri::Renderer::INDENT}" ) }
-        end
+                           when :NOTE
+                             alignment_width = element.items.flat_map(&:label).map(&:size).max + 1
+                             element.items.
+                                     map do |item| 
+                                       result = ::Bri::Renderer.render( item, item_width, alignment_width  )
+                                       result.gsub( /\n/, "\n#{::Bri::Renderer::INDENT}" )
+                                       result
+                                     end
+                         end
 
         ::Bri::Renderer::Result.new( "#{rendered_items.map(&:input).join( "\n" )}\n", width )
       end
