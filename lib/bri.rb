@@ -1,6 +1,7 @@
 require 'erb'
 require 'term/ansicolor'
 
+require_relative 'bri/text_formatting_utils'
 require_relative 'bri/renderer'
 require_relative 'bri/mall'
 require_relative 'bri/matcher'

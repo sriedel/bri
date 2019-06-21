@@ -4,7 +4,11 @@ require 'rdoc/markup/paragraph'
 module Bri
   module Match
     class Class < Base
-      include Bri::Templates::Helpers
+      # FIXME This should not be part of this class; the template may need 
+      #       a modiified binding.
+      #
+      include Bri::TextFormattingUtils  
+
       TEMPLATE = Bri::Templates::CLASS_DESCRIPTION
 
       attr_reader :type, :name, :description_paragraphs,

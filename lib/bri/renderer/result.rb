@@ -1,6 +1,8 @@
 module Bri
   module Renderer
     class Result
+      include ::Bri::TextFormattingUtils
+
       Color = ::Term::ANSIColor
 
       attr_reader :input, :width
@@ -75,47 +77,6 @@ module Bri
                     " (\\1)" )
         text
       end
-
-      def wrap_to_width( styled_text, width )
-        styled_text.split( "\n" ).map { |row| wrap_row( row, width ) }.join
-      end
-
-      def wrap_row( physical_row, width )
-        output_text = ''
-        logical_row = ''
-        printable_row_length = 0
-
-        scanner = StringScanner.new( physical_row )
-
-        while( !scanner.eos? ) 
-          token = scanner.scan( /\S+/ ).to_s
-          printable_token_length = printable_length( token )
-
-          if printable_token_length + printable_row_length > width
-            output_text << logical_row << "\n"
-            logical_row = ''
-            printable_row_length = 0
-          end
-
-          logical_row << token
-          printable_row_length += printable_token_length
-
-          token = scanner.scan( /\s*/ ).to_s
-          logical_row << token
-          printable_row_length += token.length
-        end
-
-        output_text << logical_row << "\n"
-      end
-
-      def indent( text )
-        text.split( "\n" ).map { |row| "#{::Bri::Renderer::INDENT}#{row}" }.join("\n" )
-      end
-
-      def printable_length( text )
-        Term::ANSIColor.uncolored( text ).length
-      end
-
     end
   end
 end

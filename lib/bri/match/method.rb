@@ -1,7 +1,8 @@
 module Bri
   module Match
     class Method < Base
-      include Bri::Templates::Helpers
+      include Bri::TextFormattingUtils
+
       TEMPLATE = Bri::Templates::METHOD_DESCRIPTION
 
       attr_accessor :full_name, :call_syntaxes, :description_paragraphs, :origin
