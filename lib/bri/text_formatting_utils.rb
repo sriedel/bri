@@ -48,7 +48,9 @@ module Bri
     module_function :printable_length
 
     def wrap_list( array, width = Bri.width )
-      indent( wrap_to_width( array.join("  "), width ) )
+      return '' if array.empty?
+
+      indent( wrap_to_width( array.join( "  " ), width ) )
     end
     module_function :wrap_list
 
@@ -64,9 +66,11 @@ module Bri
     module_function :hrule
 
     def print_origin( origin_text, width = Bri.width )
-      return unless origin_text
+      return '' if !origin_text || origin_text.empty?
+
       "(#{origin_text})".rjust( width )
     end
+    module_function :print_origin
 
     def section_header( text )
       "#{Term::ANSIColor.green}#{Term::ANSIColor.underline}#{text}#{Term::ANSIColor.reset}\n"
