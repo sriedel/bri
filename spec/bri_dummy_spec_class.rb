@@ -81,7 +81,14 @@ class BriDummySpecClass
   #    a. And a nested lettered list item
   #    c. Second nested lettered list item
   # c. Ending the main lettered list item.
-  def lettered_list_rendering_test_method; end
+  def lower_lettered_list_rendering_test_method; end
+
+  # A. Some goes for lettered lists
+  # B. Second item in a lettered list
+  #    A. And a nested lettered list item
+  #    B. Second nested lettered list item
+  # C. Ending the main lettered list item.
+  def upper_lettered_list_rendering_test_method; end
 
   # * A mixed list, containing
   # * bullets in the main list
