@@ -30,6 +30,11 @@ module Bri
     INDENT = ' ' * 2
     INDENT_WIDTH = 2
 
+    def self.new( element )
+      renderer_class = RDOC_TO_BRI_RENDERER_CLASS_MAP[element.class]
+      renderer_class.new( element )
+    end
+
     def self.render( element, width = Bri.width, alignment_width = 0 )
       renderer_class = RDOC_TO_BRI_RENDERER_CLASS_MAP[element.class]
       renderer_class.new( element ).render( width, alignment_width )
