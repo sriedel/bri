@@ -7,7 +7,7 @@ module Bri
           rendered_items = element.items.each_with_index.
                                    map do |item, index|
                                      bullet = next_bullet( item )
-                                     ::Bri::Renderer.new( item ).text( item_width, 0, bullet )
+                                     ::Bri::Renderer.new( item ).text( item_width, bullet )
                                    end
 
           "#{rendered_items.join}\n\n"
