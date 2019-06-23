@@ -16,7 +16,7 @@ module Bri
         def extract_text( width, label_alignment_width = 0, conserve_newlines = false )
           ::Bri::Renderer.render( element, width - ::Bri::Renderer::INDENT_WIDTH ).input + "\n"
         end
-        
+
         def max_bullet_width
           element.items.flat_map(&:label).map(&:size).max
         end

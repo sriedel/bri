@@ -19,6 +19,9 @@ module Bri
         def max_bullet_width
           ' 1. '.size
         end
+
+        def bullet( item )
+        end
       end
     end
   end
