@@ -37,7 +37,7 @@ describe Bri::TextFormattingUtils do
         let(:width) { 5 }
 
         it 'returns the word on a row' do
-          subject.should == "\nfoobar\n" # FIXME: should be "foobar\n"
+          subject.should == "foobar\n"
         end
       end
     end
@@ -113,7 +113,7 @@ describe Bri::TextFormattingUtils do
       let(:input) { "fubar" }
 
       it 'returns the word itself with a newline' do
-        subject.should == "\nfubar\n" # FIXME: should be "fubar\n"
+        subject.should == "fubar\n"
       end
     end
 
@@ -237,7 +237,7 @@ describe Bri::TextFormattingUtils do
         let(:width) { 5 }
 
         it 'returns the element on an indented row' do
-          subject.should == "  \n  foobar" # FIXME: should be "  foobar"
+          subject.should == "  foobar"
         end
       end
     end
@@ -252,7 +252,7 @@ describe Bri::TextFormattingUtils do
       end
 
       context 'and a width equal to the elements length plus separator' do
-        let(:width) { 10 } # FIXME: width should consider the indenting as well
+        let(:width) { 10 }
 
         it 'returns the array elements on an indented row separated by two spaces' do
           subject.should == "  foo  bar"

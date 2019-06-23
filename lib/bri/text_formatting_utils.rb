@@ -12,6 +12,7 @@ module Bri
       output_text = ''
       logical_row = ''
       printable_row_length = 0
+      tokens_in_row = 0
 
       scanner = StringScanner.new( physical_row )
 
@@ -19,14 +20,16 @@ module Bri
         token = scanner.scan( /\S+/ ).to_s
         printable_token_length = printable_length( token )
 
-        if printable_token_length + printable_row_length > width
+        if printable_token_length + printable_row_length > width && tokens_in_row > 0
           output_text << logical_row.rstrip << "\n"
           logical_row.clear
           printable_row_length = 0
+          tokens_in_row = 0
         end
 
         logical_row << token
         printable_row_length += printable_token_length
+        tokens_in_row += 1
 
         # TODO: Instead of using rstrip when appending the logical row,
         #       identify here if the whitespace token will be the last 
