@@ -3,7 +3,7 @@ module Bri
     class List
       class LowerLettered < Base
         def max_bullet_width
-          ' a. '.size
+          @max_bullet_width ||= ( Math.log10( element.items.size ) / Math.log10( 26 ) ).ceil + 3
         end
 
         def next_bullet( item )

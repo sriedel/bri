@@ -3,7 +3,7 @@ module Bri
     class List
       class Labeled < Base
         def max_bullet_width
-          element.items.map(&:label).map(&:size).max
+          @max_bullet_width ||= element.items.map(&:label).map(&:size).max
         end
 
         def next_bullet( item )

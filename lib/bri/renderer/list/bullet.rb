@@ -3,7 +3,7 @@ module Bri
     class List
       class Bullet < Base
         def max_bullet_width
-          ' * '.size
+          3
         end
 
         def next_bullet( item )

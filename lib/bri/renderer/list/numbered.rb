@@ -10,7 +10,7 @@ module Bri
         end
 
         def max_bullet_width
-          ' 1. '.size
+          @max_bullet_width ||= Math.log10( element.items.size ).ceil + 3
         end
       end
     end
