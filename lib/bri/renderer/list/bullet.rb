@@ -6,7 +6,7 @@ module Bri
           ' * '.size
         end
 
-        def next_bullet( item, index )
+        def next_bullet( item )
           '* '
         end
       end

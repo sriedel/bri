@@ -6,7 +6,7 @@ module Bri
           item_width = width - max_bullet_width
           rendered_items = element.items.each_with_index.
                                    map do |item, index|
-                                     bullet = next_bullet( item, index )
+                                     bullet = next_bullet( item )
                                      ::Bri::Renderer.new( item ).text( item_width, 0, bullet )
                                    end
 

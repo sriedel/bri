@@ -6,11 +6,11 @@ module Bri
           ' a. '.size
         end
 
-        def next_bullet( item, index )
+        def next_bullet( item )
           @current_bullet ||= 'a'
-          result = @current_bullet.dup
+          result = "#{@current_bullet}. "
           @current_bullet.succ!
-          result + ". "
+          result
         end
       end
     end

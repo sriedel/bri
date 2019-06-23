@@ -6,7 +6,7 @@ module Bri
           element.items.map(&:label).map(&:size).max
         end
 
-        def next_bullet( item, index )
+        def next_bullet( item )
           "#{item.label.first}: "
         end
       end
