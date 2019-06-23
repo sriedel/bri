@@ -9,3 +9,5 @@
 - Add display of module constant aliases
 - Rewrite the search code into something understandable and maintainable
   (sleep deprivation is one hell of a drug)
+- Add UTF8 rendering mode
+- Add --stats switch to see timing data
