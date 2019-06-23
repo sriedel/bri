@@ -1,6 +1,8 @@
 module Bri
   module Renderer
     class Default
+      include ::Bri::TextFormattingUtils
+
       attr_reader :element
 
       def initialize( element )

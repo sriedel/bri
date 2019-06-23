@@ -5,11 +5,7 @@ describe Bri::Renderer::List::Bullet, type: :renderer do
   describe "bulleted lists with *" do
     subject { render_description_for_method( "bulleted_list" ) }
 
-    it "should indent the list with two space" do
-      subject.lines.should include( "  * First item in a bulleted list\n" )
-    end
-
-    it "should prefix each list item with a '*' bullet" do
+    it "should prefix each list item with an indent and  a '*' bullet" do
       subject.lines.should include( "  * First item in a bulleted list\n" )
       subject.lines.should include( "  * Second item in a bulleted list\n" )
     end
@@ -41,7 +37,7 @@ describe Bri::Renderer::List::Bullet, type: :renderer do
       subject { render_description_for_method( "mixed_list" ) }
 
       it "should indent the second level with four spaces" do
-        subject.should =~ %r{\n   \d\. And numbers in a sublist\n}
+        subject.should =~ %r{\n    \d\. And numbers in a sublist\n}
       end
     end
   end
@@ -53,9 +49,9 @@ describe Bri::Renderer::List::Bullet, type: :renderer do
     end
 
     it "should prefix each list item with a '*' bullet" do
-      subject.lines.should include( "  *  A second bulleted list\n" )
-      subject.lines.should include( "  *  Second item in second bulleted list\n" )
-      subject.lines.should include( "  *  Ending the second bulleted list\n" )
+      subject.lines.should include( "  * A second bulleted list\n" )
+      subject.lines.should include( "  * Second item in second bulleted list\n" )
+      subject.lines.should include( "  * Ending the second bulleted list\n" )
     end
 
     it "should indent the second level with four spaces" do
