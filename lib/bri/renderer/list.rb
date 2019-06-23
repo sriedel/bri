@@ -15,6 +15,7 @@ module Bri
   end
 end
 
+require_relative 'list/base'
 require_relative 'list/bullet'
 require_relative 'list/numbered'
 require_relative 'list/lower_lettered'
