@@ -50,7 +50,7 @@ module Bri
     def wrap_list( array, width = Bri.width )
       return '' if array.empty?
 
-      indent( wrap_to_width( array.join( "  " ), width ) )
+      indent( wrap_to_width( array.join( "  " ), width - 2 ) )
     end
     module_function :wrap_list
 

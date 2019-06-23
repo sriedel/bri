@@ -226,7 +226,7 @@ describe Bri::TextFormattingUtils do
       end
 
       context 'and a width equal to the elements length' do
-        let(:width) { 6 }
+        let(:width) { 8 }
 
         it 'returns the element on an indented row' do
           subject.should == "  foobar"
@@ -252,7 +252,7 @@ describe Bri::TextFormattingUtils do
       end
 
       context 'and a width equal to the elements length plus separator' do
-        let(:width) { 8 } # FIXME: width should consider the indenting as well
+        let(:width) { 10 } # FIXME: width should consider the indenting as well
 
         it 'returns the array elements on an indented row separated by two spaces' do
           subject.should == "  foo  bar"
