@@ -28,6 +28,10 @@ module Bri
         logical_row << token
         printable_row_length += printable_token_length
 
+        # TODO: Instead of using rstrip when appending the logical row,
+        #       identify here if the whitespace token will be the last 
+        #       on the row, and if so, don't add it in the first place.
+        #       (sr 2019-06-23)
         token = scanner.scan( /\s+/ ).to_s
         logical_row << token
         printable_row_length += token.length
