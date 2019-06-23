@@ -11,7 +11,7 @@ describe Bri::Renderer::List::Bullet, type: :renderer do
     end
 
     it "should wrap long lines" do
-      subject.should include( "\n  * Ending a bulleted list with a really really really really really \n    really really really long line that needs to be wrapped\n" )
+      subject.should include( "\n  * Ending a bulleted list with a really really really really really\n    really really really long line that needs to be wrapped\n" )
     end
 
     it "should start second lines of a list item with the same left alignment as the first list items content" do

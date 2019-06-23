@@ -63,7 +63,7 @@ describe Bri::TextFormattingUtils do
         let(:width) { 5 }
 
         it 'returns the words on separate rows' do
-          subject.should == "foo \nbar\n" # FIXME: should be "foo\nbar\n"
+          subject.should == "foo\nbar\n"
         end
       end
     end
@@ -139,7 +139,7 @@ describe Bri::TextFormattingUtils do
       let(:input) { "foo bar" }
 
       it 'returns the words on separate rows' do
-        subject.should == "foo \nbar\n" # FIXME: should be "foo\nbar\n"
+        subject.should == "foo\nbar\n"
       end
     end
   end
@@ -263,7 +263,7 @@ describe Bri::TextFormattingUtils do
         let(:width) { 7 }
 
         it 'returns the array elements on separate indented rows' do
-          subject.should == "  foo  \n  bar" # FIXME: should be "  foo\n  bar"
+          subject.should == "  foo\n  bar"
         end
       end
     end

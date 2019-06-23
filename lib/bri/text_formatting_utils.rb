@@ -20,20 +20,20 @@ module Bri
         printable_token_length = printable_length( token )
 
         if printable_token_length + printable_row_length > width
-          output_text << logical_row << "\n"
-          logical_row = ''
+          output_text << logical_row.rstrip << "\n"
+          logical_row.clear
           printable_row_length = 0
         end
 
         logical_row << token
         printable_row_length += printable_token_length
 
-        token = scanner.scan( /\s*/ ).to_s
+        token = scanner.scan( /\s+/ ).to_s
         logical_row << token
         printable_row_length += token.length
       end
 
-      output_text << logical_row << "\n"
+      output_text << logical_row.rstrip << "\n"
     end
     module_function :wrap_row
 
