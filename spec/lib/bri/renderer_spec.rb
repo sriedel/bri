@@ -15,7 +15,7 @@ describe Bri::Renderer, type: :renderer do
 
       it "should not mark escaped \<b>bold\</b> text" do
         text = render_description_for_method( "escaped_styling" )
-        text.should include("<b>Not bold</b>,")
+        text.should include("<b>Not bold</b> and")
       end
     end
 
@@ -37,7 +37,7 @@ describe Bri::Renderer, type: :renderer do
 
       it "should not mark escaped \<em>emphasized\</em> text" do
         text = render_description_for_method( "escaped_styling" )
-        text.should include("<em>not emphasized</em>")
+        text.lines.map(&:rstrip).join( " " ).gsub(/\s+/, ' ').should include("<em>not emphasized</em>")
       end
     end
 

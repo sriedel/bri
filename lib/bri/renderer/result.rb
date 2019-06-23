@@ -72,7 +72,7 @@ module Bri
         text.gsub!( %r{\blink:(.*?)(\s|$)}, 
                     "#{Color.underline}\\1#{Color.reset}\\2" )
 
-        text.gsub!( %r{\{(.*?)\}\[(.*?)\]}, "\\1 (\\2)" )
+        text.gsub!( %r{\{(.*?)\}\[(.*?)\]}m, "\\1 (\\2)" )
         text.gsub!( %r{\[(#{Regexp.escape( Color.underline )}.*?#{Regexp.escape( Color.reset )})\]}, 
                     " (\\1)" )
         text
