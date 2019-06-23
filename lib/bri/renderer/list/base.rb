@@ -10,7 +10,7 @@ module Bri
                                      ::Bri::Renderer.new( item ).text( item_width, bullet )
                                    end
 
-          "#{rendered_items.join}\n\n"
+          rendered_items.join
         end
       end
     end
