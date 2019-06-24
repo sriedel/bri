@@ -45,7 +45,7 @@ module Bri
     module_function :wrap_row
 
     def indent( text )
-      text.split( "\n" ).map { |row| "#{INDENT}#{row}" }.join("\n" )
+      text.lines.map { |row| "#{INDENT}#{row}" }.join
     end
     module_function :indent
 

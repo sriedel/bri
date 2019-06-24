@@ -167,7 +167,7 @@ describe Bri::TextFormattingUtils do
       let(:text) { "foo\nbar\n" }
 
       it 'returns all rows indented' do
-        subject.should == "#{Bri::TextFormattingUtils::INDENT}foo\n#{Bri::TextFormattingUtils::INDENT}bar"
+        subject.should == "#{Bri::TextFormattingUtils::INDENT}foo\n#{Bri::TextFormattingUtils::INDENT}bar\n"
       end
     end
   end
@@ -221,7 +221,7 @@ describe Bri::TextFormattingUtils do
 
       context 'and a width larger than the elements length' do
         it 'returns the element on an indented row' do
-          subject.should == "  foobar"
+          subject.should == "  foobar\n"
         end
       end
 
@@ -229,7 +229,7 @@ describe Bri::TextFormattingUtils do
         let(:width) { 8 }
 
         it 'returns the element on an indented row' do
-          subject.should == "  foobar"
+          subject.should == "  foobar\n"
         end
       end
 
@@ -237,7 +237,7 @@ describe Bri::TextFormattingUtils do
         let(:width) { 5 }
 
         it 'returns the element on an indented row' do
-          subject.should == "  foobar"
+          subject.should == "  foobar\n"
         end
       end
     end
@@ -247,7 +247,7 @@ describe Bri::TextFormattingUtils do
 
       context 'and a width larger than the elements length' do
         it 'returns the array elements on an indented row separated by two spaces' do
-          subject.should == "  foo  bar"
+          subject.should == "  foo  bar\n"
         end
       end
 
@@ -255,7 +255,7 @@ describe Bri::TextFormattingUtils do
         let(:width) { 10 }
 
         it 'returns the array elements on an indented row separated by two spaces' do
-          subject.should == "  foo  bar"
+          subject.should == "  foo  bar\n"
         end
       end
 
@@ -263,7 +263,7 @@ describe Bri::TextFormattingUtils do
         let(:width) { 7 }
 
         it 'returns the array elements on separate indented rows' do
-          subject.should == "  foo\n  bar"
+          subject.should == "  foo\n  bar\n"
         end
       end
     end
