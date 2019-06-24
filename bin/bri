@@ -45,5 +45,5 @@ elsif @options[:list_methods]
 elsif @options[:list_names]
   puts Bri.list_names
 else
-  puts Bri.ri( ARGV[0], show_all: @options[:show_all] )
+  puts Bri.ri( ARGV[0], @options )
 end

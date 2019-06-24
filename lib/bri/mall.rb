@@ -3,8 +3,13 @@ require 'rdoc/ri/store'
 
 module Bri
   class Mall
+
+    def self.ri_paths( system: true, site: true, home: true, gems: true )
+      @ri_paths ||= RDoc::RI::Paths.each( system, site, home, gems )
+    end
+
     def self.stores
-      @stores ||= RDoc::RI::Paths.each( true, true, true, true ).each_with_object( [] ) do |(path, type), stores|
+      @stores ||= ri_paths.each_with_object( [] ) do |(path, type), stores|
                     stores << RDoc::Store.new( path, type ).tap { |store| store.load_cache }
                   end
     end
