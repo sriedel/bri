@@ -1,7 +1,4 @@
 - Extend unqualified search to include class methods and case insensitive searches
-- {multi word label}[links] won't display correctly if the label is right where
-  a line wrap occurs
-- Refactor the convoluted rendering of lists and list items
 - Detect ansi capabilities and use what is possible with graceful degradation?
 - Potentially try to detect method references in documentation prose and 
   highlight these (e.g. Object#send and Object.new)
