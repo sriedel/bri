@@ -8,7 +8,7 @@ module Bri
 
       private 
       def build_description( source )
-        source.map { |element| Bri::Renderer.render( element ) }.compact.map(&:output)
+        source.map { |element| Bri::Renderer.new( element ).render }.compact.map(&:output)
       end
     end
   end

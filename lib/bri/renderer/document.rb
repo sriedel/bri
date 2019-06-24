@@ -3,7 +3,7 @@ module Bri
     class Document < Default
       def extract_text( width, conserve_newlines = false )
          element.parts.
-                 map { |part| ::Bri::Renderer.extract_text( part, width, conserve_newlines ) }.
+                 map { |part| ::Bri::Renderer.new( part ).extract_text( width, conserve_newlines ) }.
                  join
       end
     end

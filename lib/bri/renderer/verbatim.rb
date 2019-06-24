@@ -2,7 +2,7 @@ module Bri
   module Renderer
     class Verbatim < Default
       def render( width = Bri.width )
-        text = ::Bri::Renderer.extract_text( element, width )
+        text = ::Bri::Renderer.new( element ).extract_text( width )
         ::Bri::Renderer::Result.new( "#{text}\n", nil )
       end
 

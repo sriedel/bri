@@ -34,15 +34,5 @@ module Bri
       renderer_class = RDOC_TO_BRI_RENDERER_CLASS_MAP[element.class]
       renderer_class.new( element )
     end
-
-    def self.render( element, width = Bri.width )
-      renderer_class = RDOC_TO_BRI_RENDERER_CLASS_MAP[element.class]
-      renderer_class.new( element ).render( width )
-    end
-
-    def self.extract_text( element, width, conserve_newlines = false )
-      renderer_class = RDOC_TO_BRI_RENDERER_CLASS_MAP[element.class]
-      renderer_class.new( element ).extract_text( width, conserve_newlines  )
-    end
   end
 end
