@@ -7,7 +7,7 @@ module Bri
       end
 
       def extract_text( width, conserve_newlines = false )
-        element.parts.map { |part| part.prepend( "  " ) }.join + "\n"
+        element.parts.map { |part| indent(part) }.join + "\n"
       end
     end
   end

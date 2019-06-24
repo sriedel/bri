@@ -1,7 +1,6 @@
 module Bri
   module TextFormattingUtils
     RULE_CHARACTER = '-'.freeze
-    INDENT = '  '.freeze
 
     def wrap_to_width( styled_text, width )
       styled_text.split( "\n" ).map { |row| wrap_row( row, width ) }.join
@@ -44,8 +43,14 @@ module Bri
     end
     module_function :wrap_row
 
-    def indent( text )
-      text.lines.map { |row| "#{INDENT}#{row}" }.join
+    def indent( text, indent_depth: 2, each_row: true )
+      indent = " " * indent_depth
+
+      if each_row
+        text.lines.map { |row| row.prepend( indent ) }.join
+      else
+        text.prepend( indent )
+      end
     end
     module_function :indent
 

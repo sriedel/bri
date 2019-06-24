@@ -145,7 +145,13 @@ describe Bri::TextFormattingUtils do
   end
 
   describe ".indent" do
-    subject { described_module.indent( text ) }
+    let(:text)         { "foo" }
+    let(:indent_depth) { 2 }
+    let(:each_row)     { true }
+    subject do
+      described_module.indent( text, indent_depth: indent_depth,
+                                     each_row:     each_row )
+    end
 
     context 'when given an empty string' do
       let(:text) { '' }
@@ -155,19 +161,63 @@ describe Bri::TextFormattingUtils do
       end
     end
 
-    context 'when given a single row' do
-      let(:text) { "foo" }
+    context 'with each_row set to true' do
+      let(:each_row) { true }
 
-      it 'returns the row indented' do
-        subject.should == "#{Bri::TextFormattingUtils::INDENT}foo"
+      context 'when given a single row' do
+        it 'returns the row indented' do
+          subject.should == "  foo"
+        end
+      end
+
+      context 'when given multiple row' do
+        let(:text) { "foo\nbar\n" }
+
+        it 'returns all rows indented' do
+          subject.should == "  foo\n  bar\n"
+        end
       end
     end
 
-    context 'when given multiple row' do
-      let(:text) { "foo\nbar\n" }
+    context 'with each_row set to false' do
+      let(:each_row) { false }
 
-      it 'returns all rows indented' do
-        subject.should == "#{Bri::TextFormattingUtils::INDENT}foo\n#{Bri::TextFormattingUtils::INDENT}bar\n"
+      context 'when given a single row' do
+        it 'returns the row indented' do
+          subject.should == "  foo"
+        end
+      end
+
+      context 'when given multiple row' do
+        let(:text) { "foo\nbar\n" }
+
+        it 'returns all rows indented' do
+          subject.should == "  foo\nbar\n"
+        end
+      end
+    end
+
+    context 'with the indent depth set to 0' do
+      let(:indent_depth) { 0 }
+
+      it 'returns the row without an indent' do
+        subject.should == text
+      end
+    end
+
+    context 'with the indent depth set to 1' do
+      let(:indent_depth) { 1 }
+
+      it 'returns the row with an indent of one space' do
+        subject.should == " #{text}"
+      end
+    end
+
+    context 'with the indent depth set to 4' do
+      let(:indent_depth) { 4 }
+
+      it 'returns the row with an indent of four spaces' do
+        subject.should == "    #{text}"
       end
     end
   end

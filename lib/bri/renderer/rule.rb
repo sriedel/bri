@@ -2,7 +2,7 @@ module Bri
   module Renderer
     class Rule < Default
       def extract_text( width, conserve_newlines = false )
-        "-" * width + "\n"
+        "#{"-" * width}\n"
       end
     end
   end
