@@ -5,7 +5,7 @@ module Bri
         element.parts.map.with_index do |part, index|
           part_is_list = part.is_a?(RDoc::Markup::List)
 
-          text = ::Bri::Renderer.extract_text( part, total_width, 0, true )
+          text = ::Bri::Renderer.extract_text( part, total_width, true )
           text.prepend( bullet ) if index == 0 && !part_is_list
           lines = text.lines
           first_line_indent = ( part_is_list || index > 0 ) ? bullet.size : 0
