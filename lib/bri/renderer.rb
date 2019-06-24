@@ -27,9 +27,6 @@ module Bri
     }
     RDOC_TO_BRI_RENDERER_CLASS_MAP.default = ::Bri::Renderer::Default
 
-    INDENT = ' ' * 2
-    INDENT_WIDTH = 2
-
     def self.new( element )
       renderer_class = RDOC_TO_BRI_RENDERER_CLASS_MAP[element.class]
       renderer_class.new( element )
