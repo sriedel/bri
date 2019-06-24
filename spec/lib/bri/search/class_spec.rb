@@ -21,7 +21,7 @@ describe Bri::Search::Class do
                                          :load_class    => true,
                                          :friendly_path => "ruby core",
                                          :module_names  => %w{ ClassOne ClassTwo } )
-        allow(Bri::Mall.instance).to receive( :stores ).and_return( [ store_one, store_two ] )
+        allow(Bri::Mall).to receive( :stores ).and_return( [ store_one, store_two ] )
         allow(Bri::Match::Class).to receive( :new ).and_return( double( Bri::Match::Class ) )
       end
 

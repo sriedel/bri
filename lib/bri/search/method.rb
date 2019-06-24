@@ -31,7 +31,7 @@ module Bri
       end
 
       def store_for_method
-        Bri::Mall.instance.stores.detect do |store|
+        Bri::Mall.stores.detect do |store|
           store_methods( store ).has_key?( @class_term ) &&
           store_methods( store )[@class_term].include?( @method_term )
         end
@@ -54,7 +54,7 @@ module Bri
 
 
       def partially_qualified_search  
-        Bri::Mall.instance.stores.each do |store|
+        Bri::Mall.stores.each do |store|
           classes_with_method( store, @method_term ).each do |klass|
             match_data = method_rdoc( store, klass, @method_term ) 
             next unless match_data
@@ -74,7 +74,7 @@ module Bri
       end
 
       def unqualified_search_worker( method_re )
-        Bri::Mall.instance.stores.each do |store|
+        Bri::Mall.stores.each do |store|
           candidates_from_method_re( store, method_re ).each do |klass, methods|
             methods.each do |method|
               match_data = method_rdoc( store, klass, method )

@@ -21,7 +21,7 @@ describe Bri::Search::InstanceMethod do
                                          :modules          => %w{ ClassOne ClassTwo },
                                          :instance_methods => { "ClassOne" => [ "method" ],
                                                              "ClassTwo" => [ "method", "my_other_method" ] } )
-      allow(Bri::Mall.instance).to receive(:stores).and_return( [ store_one, store_two ] )
+      allow(Bri::Mall).to receive(:stores).and_return( [ store_one, store_two ] )
       allow(Bri::Match::Class).to receive( :new ).and_return( double( Bri::Match::Class ) )
     end
 

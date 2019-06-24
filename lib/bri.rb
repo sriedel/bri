@@ -48,18 +48,18 @@ module Bri
   end
 
   def self.list_classes
-    Bri::Mall.instance.classes.join("\n" )
+    Bri::Mall.classes.join("\n" )
   end
 
   def self.list_methods
-    ( Bri::Mall.instance.instance_methods + 
-      Bri::Mall.instance.class_methods ).sort.join( "\n" )
+    ( Bri::Mall.instance_methods + 
+      Bri::Mall.class_methods ).sort.join( "\n" )
   end
 
   def self.list_names
-    ( Bri::Mall.instance.classes +
-      Bri::Mall.instance.instance_methods +
-      Bri::Mall.instance.class_methods ).sort.join( "\n" )
+    ( Bri::Mall.classes +
+      Bri::Mall.instance_methods +
+      Bri::Mall.class_methods ).sort.join( "\n" )
   end
 
 end
