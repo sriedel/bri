@@ -24,36 +24,30 @@ module Bri
 <%= section_header( "Includes:" ) %>
 <%= wrap_list( includes.sort ) %>
 
-
 <% end %>
 <% if !extends.empty? %>
 <%= section_header( "Extends:" ) %>
 <%= wrap_list( extends.sort ) %>
-
 
 <% end %>
 <% if !constants.empty? %>
 <%= section_header( "Constants:" ) %>
 <%= wrap_list( constants.sort ) %>
 
-
 <% end %>
 <% if !class_methods.empty? %>
 <%= section_header( "Class methods:" ) %>
 <%= wrap_list( class_methods.sort ) %>
-
 
 <% end %>
 <% if !instance_methods.empty? %>
 <%= section_header( "Instance methods:" ) %>
 <%= wrap_list( instance_methods.sort ) %>
 
-
 <% end %>
 <% if !attributes.empty? %>
 <%= section_header( "Attributes:" ) %>
 <%= wrap_list( attributes.sort ) %>
-
 
 <% end %>
     EOT
