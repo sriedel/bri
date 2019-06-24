@@ -13,6 +13,12 @@ module Bri
   DEFAULT_WIDTH = 72
 
   def self.ri( query, options )
+    if options[:show_all]
+      Bri::Mall.ri_paths( system: true, site: true, home: true, gems: true )
+    else
+      Bri::Mall.ri_paths( system: true, site: true, home: true, gems: false )
+    end
+
     results = Bri::Matcher.new( query ).find
 
     if results.size == 0
@@ -22,11 +28,6 @@ module Bri
       results.first.to_s
 
     elsif results.all? { |r| r.is_a?(Bri::Match::Class) }
-      if options[:show_all]
-        Bri::Mall.ri_paths( system: true, site: true, home: true, gems: true )
-      else
-        Bri::Mall.ri_paths( system: true, site: true, home: false, gems: false )
-      end
       results.map(&:to_s)
 
     else

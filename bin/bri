@@ -24,7 +24,7 @@ def parse_options
     opts.on( nil, "--methods", "List known methods" ) { |v| @options[:list_methods] = true }
     opts.on( "-l", "--list-names", "List known namespaces/methods" ) { |v| @options[:list_names] = true }
     opts.on( "-w", "--width [COLUMNS]", "Set the output width", Integer ) { |v| Bri.width = v.to_i - 8 }
-    opts.on( "-a", "--all", "Output all documentation for the term. Prefers core documents otherwise") { |v| @options[:show_all] = true }
+    opts.on( "-a", "--all", "Output all documentation for the term. Prefers core documents otherwise") { |v| STDERR.puts "--all invoked"; @options[:show_all] = true }
     opts.on_tail( "-h", "--help", "This help text" ) { puts opts; exit }
   end
   parser.parse!( ARGV )
