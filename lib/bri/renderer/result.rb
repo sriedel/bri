@@ -24,15 +24,6 @@ module Bri
         output.concat( other.output )
       end
 
-      def gsub( pattern, replacement )
-        # TODO: make this function superfluous
-        input.gsub!( pattern, replacement )
-      end
-
-      def prepend( prefix )
-        input.prepend( prefix )
-      end
-
       private
 
       def replace_markup( text )
