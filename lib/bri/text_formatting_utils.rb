@@ -67,13 +67,13 @@ module Bri
     module_function :wrap_list
 
     def hrule( text = '', width = Bri.width )
-      text.prepend( " " ) unless text.empty?
+      return "#{RULE_CHARACTER * width}\n" if text.empty?
 
-      rule_length = width - text.length
+      rule_length = width - text.length - 1
       rule_length = 1 if rule_length < 1
 
       rule = RULE_CHARACTER * rule_length
-      "#{rule}#{Term::ANSIColor::bold( text )}\n"
+      "#{rule} #{Term::ANSIColor::bold( text )}\n"
     end
     module_function :hrule
 

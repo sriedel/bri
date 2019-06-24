@@ -328,15 +328,15 @@ describe Bri::TextFormattingUtils do
       context 'and a width of 0' do
         let(:width) { 0 }
 
-        it 'returns an rule with a single rule character with a newline' do
-          Term::ANSIColor.uncolored(subject).should == "-\n"
+        it 'returns an rule with no rule character and a newline' do
+          Term::ANSIColor.uncolored(subject).should == "\n"
         end
       end
 
       context 'and a width greater than 0' do
         let(:width) { 8 }
 
-        it 'returns a rule with the given number of rule characters with a newline' do
+        it 'returns a rule with the given number of rule characters and a newline' do
           Term::ANSIColor.uncolored(subject).should == "--------\n"
         end
       end

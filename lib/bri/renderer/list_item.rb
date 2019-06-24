@@ -12,7 +12,9 @@ module Bri
           lines = text.lines
 
           result = indent( lines.first, indent_depth: first_line_indent )
-          lines.drop( 1 ).each { |line| result << indent( line, indent_depth: following_line_indent ) }
+          lines.drop( 1 ).each do |line|
+            result << indent( line, indent_depth: following_line_indent )
+          end
 
           result
         end
