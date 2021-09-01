@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.date = %q{2011-05-20}
   s.description = %q{An alternative to the ri command}
   s.add_dependency( 'term-ansicolor', '>= 1.7.1' )
-  s.add_dependency( 'rdoc',           '~> 6.1.1' )
+  s.add_dependency( 'rdoc',           '>= 6.1.1', '< 6.4.0' )
 
   s.add_development_dependency( 'rspec', '~> 3.8.0' )
   s.add_development_dependency( 'rspec-its' )
