@@ -4,9 +4,10 @@ describe Bri::Search::InstanceMethod do
   context "the searches" do
     let( :paragraph ) { RDoc::Markup::Paragraph.new( "Foo Description" ) }
     let( :document ) { double( RDoc::Markup::Document, :parts => [ paragraph ] ) }
+    let( :comment ) { double( RDoc::Comment, :instance_variable_get => document ) }
     let( :rdoc_method ) { double( RDoc::AnyMethod, :full_name => "Foo",
-                                                 :arglists => "",
-                                                 :comment => document ) }
+                                                   :arglists  => "",
+                                                   :comment   => comment ) }
     before( :each ) do
       store_one = double( RDoc::RI::Store, :load_cache       => true,
                                          :load_class       => true,

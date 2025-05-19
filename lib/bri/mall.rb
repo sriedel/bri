@@ -31,8 +31,11 @@ module Bri
     private
     def initialize
       # We want: system, site, home and gem documentation
-      @stores = RDoc::RI::Paths.each( true, true, true, true ).each_with_object( [] ) do |(path, type), stores|
-                  stores << RDoc::Store.new( path, type ).tap { |store| store.load_cache }
+      options = RDoc::Options.new
+      @stores = RDoc::RI::Paths.each( true, true, true, true ).
+                                each_with_object( [] ) do |(path, type), stores|
+                  stores << RDoc::Store.new( options, path: path, type: type ).
+                                        tap { |store| store.load_cache }
                 end
     end
   end

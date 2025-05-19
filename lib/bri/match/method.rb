@@ -11,7 +11,9 @@ module Bri
         @call_syntaxes = rdoc_method.arglists.lines( chomp: true ).
                                               map { |e| e.prepend( "  " ) }.
                                               join( "\n" ) + "\n" rescue ''
-        @description_paragraphs = build_description( rdoc_method.comment.parts )
+
+        document = rdoc_method.comment.instance_variable_get( :@document )
+        @description_paragraphs = build_description( document.parts )
         @origin = store&.friendly_path
       end
     end

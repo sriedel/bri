@@ -18,7 +18,9 @@ module Bri
         @type                   = rdoc_result.type
         @name                   = "#{rdoc_result.full_name}"
         @name                   << " < #{rdoc_result.superclass}" if @type == "class" && rdoc_result.superclass
-        @description_paragraphs = build_description( rdoc_result.comment.parts )
+
+        document = rdoc_result.comment.instance_variable_get( :@document )
+        @description_paragraphs = build_description( document.parts )
         @includes               = rdoc_result.includes.map(&:full_name)
         @extends                = rdoc_result.extends.map(&:full_name)
         @attributes             = rdoc_result.attributes.map { |a| "#{a.name} (#{a.rw})" }
