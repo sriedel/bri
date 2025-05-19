@@ -12,8 +12,7 @@ module Bri
                                               map { |e| e.prepend( "  " ) }.
                                               join( "\n" ) + "\n" rescue ''
 
-        document = rdoc_method.comment.instance_variable_get( :@document )
-        @description_paragraphs = build_description( document.parts )
+        @description_paragraphs = build_description_from_comment( rdoc_method.comment )
         @origin = store&.friendly_path
       end
     end

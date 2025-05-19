@@ -7,6 +7,11 @@ module Bri
       end
 
       private 
+      def build_description_from_comment( comment )
+        document = comment.instance_variable_get( :@document )
+        build_description( document.parts )
+      end
+
       def build_description( source )
         source.map { |element| Bri::Renderer.render( element ) }.compact
       end
