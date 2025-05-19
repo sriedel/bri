@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.add_dependency( 'term-ansicolor', '>= 1.7.1' )
   s.add_dependency( 'rdoc',           '~> 6.4.0' )
 
-  s.add_development_dependency( 'rspec', '~> 3.8.0' )
+  s.add_development_dependency( 'rspec', '~> 3.13.0' )
   s.add_development_dependency( 'rspec-its' )
   s.add_development_dependency( 'byebug' )
 
