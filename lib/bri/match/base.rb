@@ -2,7 +2,7 @@ module Bri
   module Match
     class Base
       def to_s
-        ERB.new( self.class.const_get( :TEMPLATE ), nil, '<>' ).
+        ERB.new( self.class.const_get( :TEMPLATE ), trim_mode: '<>' ).
             result( binding )
       end
 
