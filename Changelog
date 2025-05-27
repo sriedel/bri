@@ -1,5 +1,5 @@
-Upcoming
-  - Update rdoc requirement from 6.1 to 6.4
+0.5.0
+  - Update rdoc requirement to 6.13
 0.4.4
   - No longer display all found class/module documentation found. If core
   documentation is available, output only that, otherwise falls back to gem
